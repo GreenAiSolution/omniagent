@@ -18,7 +18,7 @@ real tools** with **human approval on anything that moves money.**
 | --- | --- |
 | `index.html` | The **Omniagent marketing & sales site** — self-contained, no build step. Open it in a browser or serve the folder. This is what a prospective business sees. |
 | `omniagent-engine/` | The **agent engine** — importable [n8n](https://n8n.io) workflows that run the real product (multimodal RAG pipeline + memory + gated tool actions). See its [README](omniagent-engine/README.md). |
-| `docs/` | Go-to-market collateral: the [sales one-pager](docs/SALES-ONEPAGER.md) and the [deployment runbook](docs/DEPLOYMENT.md). |
+| `docs/` | The business in writing: [sales one-pager](docs/SALES-ONEPAGER.md) · [deployment runbook](docs/DEPLOYMENT.md) · [operations manual](docs/OPERATIONS.md) · [sales playbook](docs/SALES-PLAYBOOK.md) · [The System offer spec](docs/THE-SYSTEM.md) · [the $300k design](docs/VALUATION.md). |
 
 ## The agent catalog
 
@@ -33,6 +33,16 @@ routing → voice/image/document handling → unified prompt → agent → reply
 | **Bookkeeper Agent** | `omniagent-engine/workflow-quickbooks-specialist.json` | Live QuickBooks Online reads + **CONFIRM-gated** invoice/payment writes. |
 | **Reservations Agent** | `omniagent-engine/workflow-reservations.json` | Real availability checks + **CONFIRM-gated** booking / reschedule / cancel. |
 | **Sales Qualifier** | `omniagent-engine/workflow-sales-qualifier.json` | Greets & qualifies inbound leads, books demos, pushes scored leads to the CRM. |
+
+## The Night Shift — scheduled automations
+
+Three services that start themselves — no inbound message required:
+
+| Service | Workflow | Runs |
+| --- | --- | --- |
+| **Night Auditor** | `omniagent-engine/workflow-night-auditor.json` | Daily 06:45 — reconciles bookings/finance/threads, morning brief to the owner's WhatsApp. |
+| **The Chaser** | `omniagent-engine/workflow-chaser.json` | Daily 09:00 — escalating follow-ups (day 3/7/14/21) on silent quotes & invoices; Monday recovered-revenue report. |
+| **Reputation Loop** | `omniagent-engine/workflow-reputation-loop.json` | Event + 1 day — asks "how was it?"; the Support Agent routes happy replies to the review link and intercepts unhappy ones into a ticket. |
 
 The three specialists and both new agents are **generated** from the base workflow —
 edit `omniagent-engine/workflow.json`, run `node build-variants.mjs`, and every agent

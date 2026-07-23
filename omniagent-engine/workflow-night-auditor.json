@@ -1,0 +1,114 @@
+{
+  "name": "Omniagent — Night Auditor (daily reconcile + morning brief)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "45 6 * * *" }
+          ]
+        }
+      },
+      "id": "na000000-0000-4000-8000-000000000001",
+      "name": "Every Morning 06:45",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 400]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "YOUR_BOOKINGS_REPORT_WEBHOOK_URL",
+        "options": {}
+      },
+      "id": "na000000-0000-4000-8000-000000000002",
+      "name": "Fetch Yesterday Bookings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [420, 400]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "YOUR_FINANCE_REPORT_WEBHOOK_URL",
+        "options": {}
+      },
+      "id": "na000000-0000-4000-8000-000000000003",
+      "name": "Fetch Yesterday Invoices",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [640, 400]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "YOUR_THREADS_REPORT_WEBHOOK_URL",
+        "options": {}
+      },
+      "id": "na000000-0000-4000-8000-000000000004",
+      "name": "Fetch Unanswered Threads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [860, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Assemble the day file from the three report endpoints.\n// Each endpoint may return any JSON shape; we pass them through verbatim\n// so the Auditor reasons over exactly what your systems said.\nconst bookings = $('Fetch Yesterday Bookings').all().map(i => i.json);\nconst finance  = $('Fetch Yesterday Invoices').all().map(i => i.json);\nconst threads  = $('Fetch Unanswered Threads').all().map(i => i.json);\nreturn [{ json: {\n  chatInput: `NIGHT AUDIT — raw day file (JSON):\\nBOOKINGS: ${JSON.stringify(bookings)}\\nFINANCE: ${JSON.stringify(finance)}\\nUNANSWERED_THREADS: ${JSON.stringify(threads)}`\n} }];"
+      },
+      "id": "na000000-0000-4000-8000-000000000005",
+      "name": "Assemble Day File",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1080, 400]
+    },
+    {
+      "parameters": {
+        "promptType": "auto",
+        "options": {
+          "systemMessage": "You are the Night Auditor for YOUR BUSINESS. Once a day you receive the raw day file: bookings, finance and unanswered-thread reports as JSON.\n\nProduce a ONE-PAGE morning brief for the owner, in WhatsApp-friendly plain text:\n1. HEADLINE — one sentence: was yesterday normal, good, or does something need attention?\n2. WHAT HAPPENED — bookings taken vs honored (flag no-shows), invoices issued vs paid, money in.\n3. WHAT'S STUCK — unanswered threads older than 12h, unpaid invoices newly overdue, mismatches between the reports (e.g. a booking with no corresponding payment).\n4. FLAGS — at most 3, most important first, each with the single next action.\n\nRules: use ONLY numbers present in the day file — never estimate or invent. If a report is empty or failed, say so plainly ('finance report unavailable') instead of guessing. Keep it under 200 words. No preamble, no sign-off."
+        }
+      },
+      "id": "na000000-0000-4000-8000-000000000006",
+      "name": "Night Auditor Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [1300, 400]
+    },
+    {
+      "parameters": {
+        "model": { "__rl": true, "mode": "list", "value": "gpt-4.1-mini" },
+        "options": {}
+      },
+      "id": "na000000-0000-4000-8000-000000000007",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [1300, 620]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "phoneNumberId": "YOUR_PHONE_NUMBER_ID",
+        "recipientPhoneNumber": "YOUR_OWNER_WHATSAPP_NUMBER",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "id": "na000000-0000-4000-8000-000000000008",
+      "name": "Send Morning Brief",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [1560, 400]
+    }
+  ],
+  "connections": {
+    "Every Morning 06:45": { "main": [[{ "node": "Fetch Yesterday Bookings", "type": "main", "index": 0 }]] },
+    "Fetch Yesterday Bookings": { "main": [[{ "node": "Fetch Yesterday Invoices", "type": "main", "index": 0 }]] },
+    "Fetch Yesterday Invoices": { "main": [[{ "node": "Fetch Unanswered Threads", "type": "main", "index": 0 }]] },
+    "Fetch Unanswered Threads": { "main": [[{ "node": "Assemble Day File", "type": "main", "index": 0 }]] },
+    "Assemble Day File": { "main": [[{ "node": "Night Auditor Agent", "type": "main", "index": 0 }]] },
+    "Night Auditor Agent": { "main": [[{ "node": "Send Morning Brief", "type": "main", "index": 0 }]] },
+    "OpenAI Chat Model": { "ai_languageModel": [[{ "node": "Night Auditor Agent", "type": "ai_languageModel", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}

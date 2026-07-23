@@ -36,8 +36,16 @@ WhatsApp Trigger ─▶ Route Types ─┬─ Text ─────────�
 | `workflow-customer-support.json` | **Support Agent** for any business — RAG + escalation/ticket tool. |
 | `workflow-reservations.json` | **Reservations Agent** — availability check + gated booking / reschedule / cancel tools. |
 | `workflow-sales-qualifier.json` | **Sales Qualifier** — RAG + lead capture (CRM) + meeting-booking tools. |
+| `workflow-night-auditor.json` | **Night Auditor** — cron 06:45: pulls the day's bookings/finance/thread reports, composes a grounded one-page morning brief, sends it to the owner's WhatsApp. |
+| `workflow-chaser.json` | **The Chaser** — cron 09:00: escalating follow-ups (day 3/7/14/21) on silent quotes & invoices, stops on reply, logs every nudge; Monday 08:00 recovered-revenue report. |
+| `workflow-reputation-loop.json` | **Reputation Loop** — webhook on job completion + 1-day wait: personal "how was it?" ask. Replies are handled by the Support Agent's feedback protocol (review link for happy, `reputation-intercept` ticket for unhappy). |
 | `ingest-knowledge-base.json` | Companion workflow to load PDFs/docs into the vector store (RAG is empty until you run this). |
 | `build-variants.mjs` | Regenerates the four specialized agents from `workflow.json` (persona + tools only differ). |
+
+Night-shift setup notes: replace the `YOUR_*` webhook URLs with endpoints that return
+your data (an n8n webhook querying your DB is fine), set `YOUR_OWNER_WHATSAPP_NUMBER`,
+`YOUR_PHONE_NUMBER_ID` and `YOUR_REVIEW_LINK`, and remember outbound messages beyond
+WhatsApp's 24-hour window must use approved templates — register one per service.
 
 All five agents share the **identical multimodal front-end** (WhatsApp trigger →
 type routing → voice/image/document handling → unified prompt → agent → reply). Only the

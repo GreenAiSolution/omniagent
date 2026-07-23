@@ -1,0 +1,90 @@
+{
+  "name": "Omniagent — Reputation Loop (day-after feedback ask)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reputation-loop",
+        "options": {}
+      },
+      "id": "rl000000-0000-4000-8000-000000000001",
+      "name": "Job Completed Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "days"
+      },
+      "id": "rl000000-0000-4000-8000-000000000002",
+      "name": "Wait One Day",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "promptType": "auto",
+        "options": {
+          "systemMessage": "You write the single day-after feedback message for YOUR BUSINESS. Input JSON describes the visit/job: customer name, what was done, when.\n\nWrite ONE short, personal WhatsApp message: greet by first name, reference the specific visit or job naturally, and ask one question — how was it? Invite an honest reply in their own words. No rating scales, no links, no 'on a scale of 1 to 10', no corporate phrasing. 2–3 sentences, signed with the business name.\n\nThe reply will be handled by the Support Agent, which walks happy customers to the review link and quietly opens a ticket for unhappy ones — so do not promise anything here beyond that you're listening."
+        }
+      },
+      "id": "rl000000-0000-4000-8000-000000000003",
+      "name": "Compose Feedback Ask",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "model": { "__rl": true, "mode": "list", "value": "gpt-4.1-mini" },
+        "options": {}
+      },
+      "id": "rl000000-0000-4000-8000-000000000004",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [640, 520]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "phoneNumberId": "YOUR_PHONE_NUMBER_ID",
+        "recipientPhoneNumber": "={{ $('Job Completed Webhook').item.json.body.phone }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "id": "rl000000-0000-4000-8000-000000000005",
+      "name": "Send Feedback Ask",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [860, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "YOUR_REPUTATION_LOG_WEBHOOK_URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ customer: $('Job Completed Webhook').item.json.body.customer, phone: $('Job Completed Webhook').item.json.body.phone, job: $('Job Completed Webhook').item.json.body.job, asked_at: $now.toISO() }) }}",
+        "options": {}
+      },
+      "id": "rl000000-0000-4000-8000-000000000006",
+      "name": "Log Ask",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 300]
+    }
+  ],
+  "connections": {
+    "Job Completed Webhook": { "main": [[{ "node": "Wait One Day", "type": "main", "index": 0 }]] },
+    "Wait One Day": { "main": [[{ "node": "Compose Feedback Ask", "type": "main", "index": 0 }]] },
+    "Compose Feedback Ask": { "main": [[{ "node": "Send Feedback Ask", "type": "main", "index": 0 }]] },
+    "OpenAI Chat Model": { "ai_languageModel": [[{ "node": "Compose Feedback Ask", "type": "ai_languageModel", "index": 0 }]] },
+    "Send Feedback Ask": { "main": [[{ "node": "Log Ask", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}
