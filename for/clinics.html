@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Reservations &amp; Support Agent for Clinics on WhatsApp | Omniagent</title>
+<meta name="description" content="Omniagent handles appointment booking, intake and patient questions on WhatsApp — voice notes included — so your front desk isn't drowning in messages. Grounded in your own documents, gated behind a typed CONFIRM." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f2eee3; --paper-2:#eae5d6; --ink:#171512; --ink-soft:#4c463c;
+  --rule:#171512; --hair:rgba(23,21,18,.18);
+  --forest:#0e2f22; --forest-2:#0a241a; --lime:#c6f36b; --lime-dim:#a8d94e;
+  --gold:#d9b96a;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--lime);color:var(--ink)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono)}
+.serif{font-family:var(--serif)}
+.k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top-in{display:flex;align-items:stretch;justify-content:space-between;height:58px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em}
+.brand .sq{width:13px;height:13px;background:var(--ink);position:relative;flex:none}
+.brand .sq:after{content:"";position:absolute;inset:3px;background:var(--lime)}
+.top-links{display:flex;align-items:stretch}
+.top-links a{display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--hair);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;transition:background .15s}
+.top-links a:hover{background:var(--paper-2)}
+.top-links a.cta{background:var(--ink);color:var(--paper);border-left:1px solid var(--ink)}
+.top-links a.cta:hover{background:var(--forest);color:var(--lime)}
+@media(max-width:640px){.top-links a:not(.cta){display:none}}
+
+/* hero */
+.hero{border-bottom:1px solid var(--rule);padding-top:64px;padding-bottom:56px}
+.hero .eyebrow{color:var(--ink-soft)}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.6vw,72px);line-height:1.04;letter-spacing:-.02em;margin:22px 0 26px}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero p.sub{font-size:17px;color:var(--ink-soft);max-width:60ch;line-height:1.65}
+.hero p.sub b{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;margin-top:34px;border:1px solid var(--rule);width:max-content;max-width:100%;min-width:0}
+.hero-actions a{padding:15px 26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;transition:.15s;min-width:0}
+.hero-actions a.primary{background:var(--ink);color:var(--paper)}
+.hero-actions a.primary:hover{background:var(--forest);color:var(--lime)}
+.hero-actions a.ghost{border-left:1px solid var(--rule)}
+.hero-actions a.ghost:hover{background:var(--paper-2)}
+@media(max-width:480px){.hero-actions{width:100%}.hero-actions a{flex:1;text-align:center}}
+
+/* section scaffolding */
+.sec{border-bottom:1px solid var(--rule);padding-top:56px;padding-bottom:56px}
+.sec .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);display:block;margin-bottom:14px}
+.sec h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.02em;line-height:1.08;margin-bottom:14px}
+.sec h2 em{font-style:italic;font-weight:300}
+.sec .aside{max-width:64ch;color:var(--ink-soft);font-size:15.5px;margin-bottom:34px}
+
+/* agent cards */
+.agent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--rule)}
+.acard{padding:28px 30px 34px;border-right:1px solid var(--hair);min-width:0}
+.acard:last-child{border-right:0}
+.acard .k{color:var(--ink-soft);display:block;margin-bottom:14px}
+.acard h3{font-family:var(--serif);font-weight:400;font-size:26px;letter-spacing:-.01em;margin-bottom:12px;line-height:1.15}
+.acard p{font-size:14.5px;color:var(--ink-soft);line-height:1.65}
+.acard p b{color:var(--ink);font-weight:600}
+.acard .tools{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
+@media(max-width:760px){.agent-grid{grid-template-columns:1fr}.acard{border-right:0;border-bottom:1px solid var(--hair)}.acard:last-child{border-bottom:0}}
+
+/* intake callout */
+.spec{border-top:1px solid var(--rule)}
+.spec-row{display:grid;grid-template-columns:160px 1fr auto;gap:20px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--hair)}
+.spec-row:last-child{border-bottom:0}
+.spec-row .in{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:-.01em}
+.spec-row .out{color:var(--ink-soft);font-size:14.5px;max-width:58ch}
+.spec-row .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--hair);padding:5px 10px;white-space:nowrap}
+@media(max-width:700px){.spec-row{grid-template-columns:1fr;gap:6px}.spec-row .tag{justify-self:start}}
+
+/* pricing teaser */
+.price-teaser{border-bottom:1px solid var(--rule);padding-top:40px;padding-bottom:40px}
+.pt-row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+.pt-row p{font-size:15.5px;color:var(--ink-soft);max-width:58ch}
+.pt-row p b{color:var(--ink)}
+.pt-row a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule);padding:13px 22px;white-space:nowrap;transition:.15s;min-width:0}
+.pt-row a:hover{background:var(--ink);color:var(--paper)}
+
+/* final */
+.final{background:var(--ink);color:var(--paper);border-bottom:1px solid var(--ink);padding-top:72px;padding-bottom:72px}
+.final h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.4vw,58px);letter-spacing:-.02em;line-height:1.06;margin-bottom:16px}
+.final h2 em{font-style:italic;font-weight:300;color:var(--lime)}
+.final p{color:#b6b0a4;max-width:52ch;font-size:16px;margin-bottom:32px}
+.final-actions{display:flex;border:1px solid var(--paper);width:max-content;max-width:100%;min-width:0}
+.final-actions a{padding:17px 28px;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;transition:.15s;min-width:0}
+.final-actions a:first-child{border-right:1px solid var(--paper)}
+.final-actions a:hover{background:var(--lime);color:var(--ink)}
+@media(max-width:560px){.final-actions{width:100%}.final-actions a{flex:1;text-align:center}}
+
+/* footer */
+footer{background:var(--ink);color:#8a8478}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;padding-bottom:26px;border-top:1px solid rgba(242,238,227,.14);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+footer a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="../index.html"><span class="sq"></span>Omniagent</a>
+    <div class="top-links">
+      <a href="../index.html#staff">The staff</a>
+      <a href="../index.html#price">Price list</a>
+      <a class="cta" href="../index.html#final">Book a demo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="k eyebrow">For clinics &amp; services — no. 04</span>
+    <h1>Intake, in the patient's own words.<br /><em>Voice notes included.</em></h1>
+    <p class="sub">A patient sends a voice note from the car asking to move Thursday's appointment. Another texts three questions in a row about prep instructions. Omniagent's Reservations Agent checks the <b>real calendar</b> and books, reschedules or cancels only after a typed <b>CONFIRM</b>; the Support Agent answers everything else straight from your intake documents and policies. The front desk breathes.</p>
+    <div class="hero-actions">
+      <a class="primary" href="../index.html#final">Book a 20-min demo</a>
+      <a class="ghost" href="../index.html#try">Try it live — no form</a>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <span class="num">01 / How it works for you</span>
+    <h2>Two moves cover<br /><em>most of the front desk.</em></h2>
+    <p class="aside">Every agent shares the same multimodal core — retrieval over your own intake forms, policies and FAQs, memory, and voice understanding. For a clinic or services practice, two roles do almost all the work.</p>
+  </div>
+  <div class="wrap">
+    <div class="agent-grid">
+      <div class="acard">
+        <span class="k">Reservations Agent</span>
+        <h3>The bookings desk that never closes</h3>
+        <p>Checks real availability before promising anything, then books, reschedules or cancels an appointment only once the patient replies <b>CONFIRM</b>. No overbooked slots, no double-booked providers, no phone tag over a reschedule.</p>
+        <div class="tools">tools: check_availability · gated booking</div>
+      </div>
+      <div class="acard">
+        <span class="k">Support Agent</span>
+        <h3>Warm, sharp, honest</h3>
+        <p>Answers intake questions, prep instructions and policies straight from your own documents — in whatever format the patient sends, text or voice note. Anything clinical or sensitive escalates into a <b>ticket with the full context</b> attached, never a guess.</p>
+        <div class="tools">tools: knowledge_base · create_ticket</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inputs" style="padding-top:0">
+  <div class="wrap">
+    <span class="num">02 / Intake</span>
+    <h2>Send it anything.<br /><em>It copes.</em></h2>
+    <p class="aside">Patients don't type tidy questions. They send a voice note from the car and a photo of a referral letter. Same thread, same agent, same answer quality.</p>
+    <div class="spec">
+      <div class="spec-row"><span class="in">Voice notes</span><span class="out">Transcribed first, then treated exactly like text. Accents, slang, background noise included.</span><span class="tag">whisper</span></div>
+      <div class="spec-row"><span class="in">Text</span><span class="out">Answered from your documents, source cited inline — like a footnote, not a guess.</span><span class="tag">grounded</span></div>
+      <div class="spec-row"><span class="in">Photos &amp; PDFs</span><span class="out">Referral letters, forms and receipts extracted and reasoned over inside the conversation.</span><span class="tag">vision · extract</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="price-teaser">
+  <div class="wrap pt-row">
+    <p>Reservations and Support both fit comfortably inside the <b>Growth</b> plan's up to three agents ($399/mo). See the full breakdown.</p>
+    <a href="../index.html#price">View price list</a>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Let the front desk<br /><em>breathe again.</em></h2>
+    <p>Twenty minutes. Bring your hardest scheduling or intake question — we point an agent at your actual documents and let it answer, live, while you watch.</p>
+    <div class="final-actions">
+      <a href="../index.html#final">Book a 20-min demo</a>
+      <a href="../index.html#try">Try it live</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 OMNIAGENT</span>
+    <span>ANSWER EVERYTHING · INVENT NOTHING</span>
+    <a href="../index.html">BACK TO OMNIAGENT.AI</a>
+  </div>
+</footer>
+
+</body>
+</html>
