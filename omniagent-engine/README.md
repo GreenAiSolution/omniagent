@@ -41,6 +41,9 @@ WhatsApp Trigger ─▶ Route Types ─┬─ Text ─────────�
 | `workflow-reputation-loop.json` | **Reputation Loop** — webhook on job completion + 1-day wait: personal "how was it?" ask. Replies are handled by the Support Agent's feedback protocol (review link for happy, `reputation-intercept` ticket for unhappy). |
 | `ingest-knowledge-base.json` | Companion workflow to load PDFs/docs into the vector store (RAG is empty until you run this). |
 | `build-variants.mjs` | Regenerates the four specialized agents from `workflow.json` (persona + tools only differ). |
+| `workflow-voice-agent.json` | **Voice Agent** *(in build)* — answers phone calls on the same grounded/gated core, spoken instead of typed. |
+| `workflow-rcs-channel.json` | **RCS Channel** *(in build)* — the Concierge core over RCS Business Messaging instead of WhatsApp. |
+| `workflow-checkout.json` | **Concierge Checkout** *(in build)* — takes payment via a Stripe Payment Link, gated by the same CONFIRM protocol as a booking. |
 
 Night-shift setup notes: replace the `YOUR_*` webhook URLs with endpoints that return
 your data (an n8n webhook querying your DB is fine), set `YOUR_OWNER_WHATSAPP_NUMBER`,
@@ -218,6 +221,50 @@ naturally (need, budget, timeline, role), then logs it to the CRM and/or books a
 2. Set **`YOUR_CRM_WEBHOOK_URL`** (HubSpot/Salesforce/Pipedrive webhook, or a Sheet append)
    and **`YOUR_SCHEDULING_WEBHOOK_URL`** (Calendly/Cal.com/Google Calendar via n8n).
 3. Delete either tool node to run capture-only or booking-only.
+
+---
+
+## What's next — in build
+
+Three workflows extending the catalog beyond WhatsApp text/voice-note/image/document.
+They're structurally complete and importable — same node/connection conventions as the
+five agents above — but need channel-specific accounts wired in before they're a
+customer-facing product, so they ship here as **in build**, not on the public price list.
+
+### Voice Agent — `workflow-voice-agent.json`
+Answers phone calls placed to the business's number. n8n has no native telephony
+trigger, so this uses the standard pattern for it: a **Webhook** node receiving Twilio
+Voice's incoming-call webhook, a `<Gather input="speech">` TwiML response that lets
+Twilio do the speech-to-text itself, the same core agent (retrieval, memory, grounded
+answers) reasoning over the transcript, and a second TwiML response that speaks the
+reply back and re-opens the mic for the next turn. Anything irreversible stays behind
+the same CONFIRM pattern as every other agent — spoken instead of typed ("say the word
+confirm").
+
+**Extra setup:** a Twilio phone number with Voice webhooks pointed at this workflow's
+`/voice-incoming` n8n webhook URL (both the initial call and the `action` callback on
+`<Gather>` hit the same endpoint).
+
+### RCS Channel — `workflow-rcs-channel.json`
+The identical Concierge core — retrieval, memory, grounded answers — over RCS Business
+Messaging instead of WhatsApp. n8n has no native RCS node, so inbound messages arrive
+via **Webhook** from an RCS-capable BSP (Infobip or Twilio both support it) and replies
+go out via an **HTTP Request** node against that BSP's send-message REST API.
+
+**Extra setup:** an RCS agent registered with your BSP of choice, its webhook pointed at
+`/rcs-inbound`, and `YOUR_RCS_BSP_HOST` / `YOUR_BSP_API_KEY` filled in on the **Send RCS
+Reply** node.
+
+### Concierge Checkout — `workflow-checkout.json`
+Extends the agent with a real payment capability, gated exactly like the Bookkeeper's
+QuickBooks writes: the agent summarizes the charge, waits for a typed `CONFIRM`, and
+only then calls **`create_payment_link`** (n8n's native Stripe node) to generate a
+Stripe Payment Link and send it over WhatsApp. A second flow in the same file — a
+**Stripe Trigger** on `checkout.session.completed` — notifies both the customer and the
+business owner the moment it's paid.
+
+**Extra setup:** a Stripe account connected via n8n's Stripe credential, and
+`YOUR_PHONE_NUMBER_ID` / `YOUR_OWNER_NUMBER` filled in on the two **Notify** nodes.
 
 ---
 
