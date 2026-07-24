@@ -240,9 +240,25 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 .p-cta:hover{background:var(--ink);color:var(--paper)}
 .pcol.mid .p-cta{border-color:rgba(198,243,107,.18);background:var(--lime);color:var(--ink)}
 .pcol.mid .p-cta:hover{background:#d9fb8e}
-.price-foot{padding:20px 0 56px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);line-height:1.8}
+.price-foot{padding:20px 0 32px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);line-height:1.8}
 .price-foot b{color:var(--ink);font-weight:500}
 @media(max-width:860px){.price-table{grid-template-columns:1fr}.pcol{border-right:0;border-bottom:1px solid var(--hair)}}
+
+/* ---------- comparison table ---------- */
+.comp-wrap{border-top:1px solid var(--rule);padding-top:36px;padding-bottom:56px}
+.comp-wrap h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:6px}
+.comp-wrap>p.comp-lede{font-size:13.5px;color:var(--ink-soft);max-width:56ch;margin-bottom:20px}
+.comp-scroll{overflow-x:auto;border:1px solid var(--hair)}
+.comp-tbl{width:100%;min-width:560px;border-collapse:collapse;font-size:13.5px}
+.comp-tbl th{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;text-align:left;color:var(--ink-soft);padding:10px 16px;border-bottom:1px solid var(--rule);background:var(--paper-2)}
+.comp-tbl td{padding:13px 16px;border-bottom:1px solid var(--hair);vertical-align:top;color:var(--ink-soft)}
+.comp-tbl tr:last-child td{border-bottom:0}
+.comp-tbl td:first-child{font-family:var(--serif);font-size:15px;color:var(--ink)}
+.comp-tbl td:last-child{font-variant-numeric:tabular-nums}
+.comp-tbl tr.self{background:rgba(198,243,107,.13)}
+.comp-tbl tr.self td:first-child{font-weight:600}
+.comp-tbl tr.self td:last-child{color:var(--forest);font-weight:600}
+.comp-src{font-size:11.5px;color:var(--ink-soft);margin-top:12px;font-family:var(--mono)}
 
 /* ---------- THE SYSTEM ---------- */
 .system{background:#0b0a08;color:var(--paper);border-bottom:1px solid #0b0a08;position:relative;overflow:hidden}
@@ -354,7 +370,7 @@ footer a:hover{color:var(--paper)}
 .note.match:before{color:var(--forest);background:rgba(14,47,34,.08)}
 
 /* ---------- live sandbox inside the service record ---------- */
-.av-try{padding:16px 24px 22px;border-top:1px solid rgba(198,243,107,.18)}
+.av-try{padding:16px 24px 22px;border-top:1px solid rgba(198,243,107,.18);scroll-margin-top:76px}
 .try-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:12px}
 .try-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8fae92}
 .try-badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);border:1px solid rgba(198,243,107,.35);padding:3px 7px;white-space:nowrap}
@@ -476,7 +492,7 @@ footer a:hover{color:var(--paper)}
     <div class="top-links">
       <a href="#staff">The staff</a>
       <a href="#night">Night shift</a>
-      <a href="#controls">Controls</a>
+      <a href="#controls">Trust</a>
       <a href="#price">Price list</a>
       <a href="#builder">Build</a>
       <a href="#system">The System</a>
@@ -503,7 +519,7 @@ footer a:hover{color:var(--paper)}
       <p class="persona-tag" id="personaTag" style="display:none"></p>
       <div class="hero-actions">
         <a class="primary" href="#final">Book a 20-min demo</a>
-        <a class="ghost" href="#staff">Meet the staff</a>
+        <a class="ghost" href="#try">Try it live — no form</a>
       </div>
       <div class="hero-meta">
         <span><b>Live in a weekend</b> — one workflow import</span>
@@ -522,7 +538,7 @@ footer a:hover{color:var(--paper)}
 <section class="eli5">
   <div class="wrap eli5-in">
     <span class="eli5-mark">In plain English</span>
-    <p>It's a smart employee that lives in your WhatsApp. It answers customers honestly using only what you've told it, never spends a cent without asking first, and keeps working after everyone else has gone home.</p>
+    <p>It's a smart employee that lives in your WhatsApp. It answers customers honestly using only what you've told it — in whatever language they write to you in — never spends a cent without asking first, and keeps working after everyone else has gone home.</p>
   </div>
 </section>
 
@@ -615,7 +631,7 @@ footer a:hover{color:var(--paper)}
         <div class="av-head"><span class="k" id="avName">—</span><span class="tools" id="avTools">—</span></div>
         <div class="av-body" id="avBody"></div>
         <div class="av-desc" id="avDesc"></div>
-        <div class="av-try">
+        <div class="av-try" id="try">
           <div class="try-row"><span class="try-label">Try it — type a customer message</span><span class="try-badge">simulated preview</span></div>
           <form id="tryForm" autocomplete="off">
             <input id="tryInput" type="text" placeholder="e.g. can I get a table for 2 saturday?" maxlength="140" />
@@ -690,9 +706,9 @@ footer a:hover{color:var(--paper)}
 <section class="sec" id="controls">
   <div class="wrap">
     <div class="sec-head">
-      <span class="num">05 / Controls</span>
+      <span class="num">05 / Trust &amp; security</span>
       <h2>Why it's allowed<br /><em>near your customers.</em></h2>
-      <p class="aside">The distance between a demo and something you'd trust with real people is control. It's not a feature tier. It's the default.</p>
+      <p class="aside">The distance between a demo and something you'd trust with real people is control. It's not a feature tier, it's the default — and none of this is here to replace your team. It's here to protect their time, and hand off the moment a customer needs a human's judgment instead of an agent's.</p>
     </div>
   </div>
   <div class="wrap">
@@ -782,6 +798,23 @@ footer a:hover{color:var(--paper)}
       </div>
     </div>
     <p class="price-foot"><b>Done-for-you setup — $900, once.</b> We connect the number, load the knowledge, wire the tools, hand you a live agent. Or self-serve with the runbook in the box. For the tier above all of this, see <b>The System</b> below.</p>
+    <div class="comp-wrap">
+      <h3>How that compares.</h3>
+      <p class="comp-lede">Most of this category bills you per resolved conversation. That number moves with your volume — yours doesn't.</p>
+      <div class="comp-scroll">
+        <table class="comp-tbl">
+          <thead><tr><th>Vendor</th><th>Billing model</th><th>Effective cost</th></tr></thead>
+          <tbody>
+            <tr class="self"><td>Omniagent</td><td>Flat monthly subscription</td><td>$149–$399/mo</td></tr>
+            <tr><td>Intercom Fin</td><td>Per completed outcome</td><td>$0.99 / outcome</td></tr>
+            <tr><td>Zendesk + Forethought</td><td>Per resolution, plus a seat add-on</td><td>~$1.50–$2.00 / resolution + $50/seat/mo</td></tr>
+            <tr><td>Salesforce Agentforce</td><td>Per conversation — resolved or not</td><td>$2.00 / conversation</td></tr>
+            <tr><td>Decagon / Sierra</td><td>Enterprise contract</td><td>~$95k–$590k / year</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="comp-src">Public pricing as published by each vendor, 2026. Confirm current rates directly with them before comparing.</p>
+    </div>
   </div>
 </section>
 
@@ -878,6 +911,7 @@ footer a:hover{color:var(--paper)}
       <details><summary>Who holds my data?<span class="mk">+</span></summary><p>You do. It runs on your own n8n instance, your OpenAI key, your MongoDB Atlas cluster. We are not in the middle of your customer conversations and nothing trains on them.</p></details>
       <details><summary>How long until it's live?<span class="mk">+</span></summary><p>Self-serve: a weekend. Done-for-you: we connect the number, load the knowledge and wire the tools within a few business days. The System: a scoping conversation first — that's the point of the application.</p></details>
       <details><summary>Why doesn't The System show a price?<span class="mk">+</span></summary><p>Because it's scoped to your business, built to your stack, and capacity-limited by the human ops desk behind it. It is not cheap, and it is not for everyone — the application exists so neither of us wastes the other's time.</p></details>
+      <details><summary>What's coming next?<span class="mk">+</span></summary><p>Three things currently in build, in this order: a <b>Voice Agent</b> for the phone number itself, now that WhatsApp supports native voice calling — same grounded, gated core, spoken instead of typed. A gated checkout, so the agent can take a payment the same way it takes a booking — summarized first, moved only after CONFIRM. And a second channel alongside WhatsApp, most likely RCS. None of this is live yet — this page will say so the day it is.</p></details>
     </div>
   </div>
 </section>
