@@ -145,7 +145,9 @@ nav.top{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1
 .av-head{padding:18px 24px;border-bottom:1px solid rgba(198,243,107,.18);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .av-head .k{color:var(--lime)}
 .av-head .tools{font-family:var(--mono);font-size:11px;color:#8fae92;text-align:right}
-.av-body{flex:1;padding:24px;font-family:var(--mono);font-size:13px;line-height:1.8;min-height:380px}
+.av-body{flex:1;padding:24px;font-family:var(--mono);font-size:13px;line-height:1.8;min-height:380px;max-height:460px;overflow-y:auto}
+.av-body::-webkit-scrollbar{width:6px}
+.av-body::-webkit-scrollbar-thumb{background:rgba(198,243,107,.3)}
 .av-desc{padding:18px 24px;border-top:1px solid rgba(198,243,107,.18);font-family:var(--sans);font-size:14px;color:#b9c9b6;line-height:1.6}
 .av-desc b{color:#fff;font-weight:500}
 @media(max-width:920px){.agents-wrap{grid-template-columns:1fr}.agent-index{border-right:0;border-bottom:1px solid var(--rule)}}
@@ -156,7 +158,7 @@ nav.top{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1
 .night .sec-head h2{color:var(--paper)}
 .night .sec-head .aside{color:#b6b0a4}
 .nrows{border-top:1px solid rgba(242,238,227,.25)}
-.nrow{display:grid;grid-template-columns:120px 260px 1fr auto;gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid rgba(242,238,227,.14);transition:background .2s}
+.nrow{position:relative;display:grid;grid-template-columns:120px 260px 1fr auto;gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid rgba(242,238,227,.14);transition:background .2s}
 .nrow:hover{background:rgba(198,243,107,.04)}
 .nrow .tm{font-family:var(--mono);font-size:14px;color:var(--lime)}
 .nrow .nm{font-family:var(--serif);font-size:27px;font-weight:400;letter-spacing:-.01em;color:var(--paper);line-height:1.1}
@@ -286,7 +288,7 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 
 /* ---------- field notes ---------- */
 .notes{border-top:1px solid var(--rule)}
-.note{display:grid;grid-template-columns:220px 1fr auto;gap:22px;padding:24px 0;border-bottom:1px solid var(--hair);align-items:baseline;transition:background .2s}
+.note{position:relative;display:grid;grid-template-columns:220px 1fr auto;gap:22px;padding:24px 0;border-bottom:1px solid var(--hair);align-items:baseline;transition:background .2s}
 .note:hover{background:var(--paper-2)}
 .note:last-child{border-bottom:0}
 .note .who{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
@@ -327,6 +329,73 @@ footer a:hover{color:var(--paper)}
 
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .reveal.show{opacity:1;transform:none}
+
+/* ---------- persona switcher ---------- */
+.persona-bar{background:var(--paper-2);border-bottom:1px solid var(--rule)}
+.persona-in{display:flex;align-items:center;gap:14px;padding:14px 0;flex-wrap:wrap}
+.persona-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.persona-chips{display:flex;flex-wrap:wrap;gap:8px;flex:1}
+.pchip{border:1px solid var(--hair);padding:7px 14px;font-family:var(--mono);font-size:11.5px;cursor:pointer;transition:.15s;background:var(--paper)}
+.pchip:hover{border-color:var(--ink)}
+.pchip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.persona-clear{border:0;background:transparent;font-family:var(--mono);font-size:11px;color:var(--ink-soft);cursor:pointer;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s}
+.persona-clear.show{opacity:1;pointer-events:auto}
+.persona-clear:hover{color:var(--ink)}
+@media(max-width:700px){.persona-label{display:none}}
+
+.persona-tag{font-family:var(--mono);font-size:12.5px;color:var(--forest);background:var(--lime);display:inline-flex;align-items:center;gap:10px;padding:9px 14px;margin-top:18px;width:max-content;max-width:100%}
+.persona-tag button{background:transparent;border:0;font-family:var(--mono);font-size:11px;text-decoration:underline;cursor:pointer;color:var(--forest);white-space:nowrap}
+
+/* match highlighting driven by the persona switcher */
+.nrow.match,.note.match{position:relative}
+.nrow.match{background:rgba(198,243,107,.06)}
+.note.match{background:var(--paper-2)}
+.nrow.match:before,.note.match:before{content:"match";position:absolute;top:10px;right:0;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);background:rgba(198,243,107,.14);padding:3px 8px}
+.note.match:before{color:var(--forest);background:rgba(14,47,34,.08)}
+
+/* ---------- live sandbox inside the service record ---------- */
+.av-try{padding:16px 24px 22px;border-top:1px solid rgba(198,243,107,.18)}
+.try-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:12px}
+.try-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8fae92}
+.try-badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);border:1px solid rgba(198,243,107,.35);padding:3px 7px;white-space:nowrap}
+#tryForm{display:flex;border:1px solid rgba(198,243,107,.3);transition:border-color .15s}
+#tryForm:focus-within{border-color:var(--lime)}
+#tryInput{flex:1;background:transparent;border:0;padding:12px 14px;color:#dfe8dd;font-family:var(--sans);font-size:13.5px;outline:none;min-width:0}
+#tryInput::placeholder{color:#5f7d66}
+#tryForm button{background:var(--lime);color:var(--ink);border:0;padding:0 20px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.15s}
+#tryForm button:hover{background:#d9fb8e}
+
+/* ---------- build your stack ---------- */
+.builder{border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.builder-cols{padding:36px 44px 40px 0;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:30px}
+.bcol-h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:14px}
+.bchips{display:flex;flex-wrap:wrap;gap:10px}
+.bchip{border:1px solid var(--hair);padding:10px 16px;font-family:var(--mono);font-size:12.5px;cursor:pointer;transition:.15s;user-select:none}
+.bchip:hover{border-color:var(--ink)}
+.bchip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.build-out{padding:36px 0 40px 44px;display:flex;flex-direction:column;gap:16px;justify-content:center}
+.build-tier,.build-est{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--hair);padding-bottom:14px}
+.build-tier .lbl,.build-est .lbl{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.build-tier .val,.build-est .val{font-family:var(--serif);font-size:24px}
+.build-summary{font-size:13.5px;color:var(--ink-soft);line-height:1.7;min-height:60px}
+.build-cta{display:block;text-align:center;padding:15px;border:1px solid var(--rule);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;transition:.15s}
+.build-cta:hover{background:var(--ink);color:var(--paper)}
+@media(max-width:860px){.builder{grid-template-columns:1fr}.builder-cols{border-right:0;border-bottom:1px solid var(--rule);padding-right:0}.build-out{padding-left:0}}
+
+/* ---------- command palette ---------- */
+.cmdk-hint{position:fixed;right:22px;bottom:22px;z-index:70;background:var(--ink);color:var(--paper);border:1px solid var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:10px 16px;cursor:pointer;transition:.15s;opacity:.85}
+.cmdk-hint:hover{opacity:1;background:var(--forest);color:var(--lime)}
+@media(max-width:700px){.cmdk-hint{display:none}}
+.cmdk-overlay{position:fixed;inset:0;background:rgba(11,10,8,.72);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:14vh 20px 0}
+.cmdk-overlay.open{display:flex}
+.cmdk-box{width:min(560px,100%);background:var(--paper);border:1px solid var(--ink);max-height:70vh;display:flex;flex-direction:column}
+#cmdkInput{border:0;border-bottom:1px solid var(--rule);padding:18px 20px;font-family:var(--sans);font-size:16px;background:transparent;color:var(--ink);outline:none}
+.cmdk-list{overflow-y:auto;flex:1}
+.cmdk-item{padding:13px 20px;font-family:var(--mono);font-size:13px;cursor:pointer;display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid var(--hair)}
+.cmdk-item .t2{color:var(--ink-soft);font-size:11px}
+.cmdk-item:hover,.cmdk-item.sel{background:var(--ink);color:var(--paper)}
+.cmdk-item:hover .t2,.cmdk-item.sel .t2{color:#a9a397}
+.cmdk-foot{display:flex;gap:16px;padding:10px 20px;border-top:1px solid var(--hair);font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.06em}
 </style>
 </head>
 <body>
@@ -341,11 +410,20 @@ footer a:hover{color:var(--paper)}
       <a href="#night">Night shift</a>
       <a href="#controls">Controls</a>
       <a href="#price">Price list</a>
+      <a href="#builder">Build</a>
       <a href="#system">The System</a>
       <a class="cta" href="#final">Book a demo</a>
     </div>
   </div>
 </nav>
+
+<div class="persona-bar">
+  <div class="wrap persona-in">
+    <span class="persona-label">I run a —</span>
+    <div class="persona-chips" id="personaChips"></div>
+    <button class="persona-clear" id="personaClear" type="button">clear ✕</button>
+  </div>
+</div>
 
 <a id="top"></a>
 <header class="hero">
@@ -354,6 +432,7 @@ footer a:hover{color:var(--paper)}
       <span class="k" style="color:var(--ink-soft)">AI staff for your WhatsApp number — no. 001</span>
       <h1 id="heroH1" data-line1="Answer |everything.|" data-line2="Invent |nothing.|"></h1>
       <p class="sub">Omniagent puts a working agent on the WhatsApp number your customers already text. It reads messages, voice notes, photos and PDFs; answers <b>only from your documents</b>, with the source cited; and takes real actions in your real tools. Money moves only after a human types <b>CONFIRM</b>.</p>
+      <p class="persona-tag" id="personaTag" style="display:none"></p>
       <div class="hero-actions">
         <a class="primary" href="#final">Book a 20-min demo</a>
         <a class="ghost" href="#staff">Meet the staff</a>
@@ -413,6 +492,13 @@ footer a:hover{color:var(--paper)}
         <div class="av-head"><span class="k" id="avName">—</span><span class="tools" id="avTools">—</span></div>
         <div class="av-body" id="avBody"></div>
         <div class="av-desc" id="avDesc"></div>
+        <div class="av-try">
+          <div class="try-row"><span class="try-label">Try it — type a customer message</span><span class="try-badge">simulated preview</span></div>
+          <form id="tryForm" autocomplete="off">
+            <input id="tryInput" type="text" placeholder="e.g. can I get a table for 2 saturday?" maxlength="140" />
+            <button type="submit">Send</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -558,6 +644,28 @@ footer a:hover{color:var(--paper)}
   </div>
 </section>
 
+<section class="sec" id="builder">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">07.5 / Build your stack</span>
+      <h2>Pick what you need.<br /><em>Watch the plan write itself.</em></h2>
+      <p class="aside">Toggle the agents and night-shift services you want. The tier and estimate update live — email yourself the exact build when you're done.</p>
+    </div>
+    <div class="builder reveal">
+      <div class="builder-cols">
+        <div class="bcol"><span class="bcol-h">Agents</span><div class="bchips" id="bAgents"></div></div>
+        <div class="bcol"><span class="bcol-h">Night shift</span><div class="bchips" id="bNight"></div></div>
+      </div>
+      <div class="build-out">
+        <div class="build-tier"><span class="lbl">Recommended tier</span><span class="val" id="bTier">—</span></div>
+        <div class="build-est"><span class="lbl">Estimate</span><span class="val" id="bEst">—</span></div>
+        <p class="build-summary" id="bSummary">Select a few things to see your build.</p>
+        <a class="build-cta" id="bCta" href="#final">Email me this build</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="system" id="system">
   <div class="wrap system-in">
     <div>
@@ -655,6 +763,15 @@ footer a:hover{color:var(--paper)}
   </div>
 </footer>
 
+<button class="cmdk-hint" id="cmdkHint" type="button">⌘K — jump around</button>
+<div class="cmdk-overlay" id="cmdkOverlay" role="dialog" aria-modal="true" aria-label="Quick navigation">
+  <div class="cmdk-box">
+    <input id="cmdkInput" type="text" placeholder="Jump to…" autocomplete="off" />
+    <div class="cmdk-list" id="cmdkList"></div>
+    <div class="cmdk-foot"><span>&uarr;&darr; navigate</span><span>&crarr; go</span><span>esc close</span></div>
+  </div>
+</div>
+
 <script>
 /* hero word reveal */
 (function(){
@@ -742,12 +859,13 @@ AGENTS.forEach(function(a,i){
   var r=document.createElement('div');
   r.className='arow'+(i===0?' active':'');
   r.innerHTML='<span class="idx">0'+(i+1)+'</span><span class="nm serif">'+a.nm+'</span><span class="rl">'+a.rl+'</span>';
-  r.addEventListener('click',function(){
-    document.querySelectorAll('.arow').forEach(function(x){x.classList.remove('active');});
-    r.classList.add('active');renderAgent(i);
-  });
+  r.addEventListener('click',function(){ selectAgentIndex(i); });
   aindex.appendChild(r);
 });
+function selectAgentIndex(i){
+  document.querySelectorAll('.arow').forEach(function(x,xi){x.classList.toggle('active',xi===i);});
+  renderAgent(i);
+}
 function renderAgent(i){
   var a=AGENTS[i];
   avName.textContent='Service record — '+a.nm;
@@ -758,6 +876,7 @@ function renderAgent(i){
     var who=l[0]==='tool'?'':'<span class="who">'+(l[0]==='guest'?'guest':'omniagent')+'</span>';
     return '<div class="'+cls+'" style="animation-delay:'+(j*.12)+'s">'+who+l[1]+'</div>';
   }).join('');
+  avBody.scrollTop=0;
 }
 renderAgent(0);
 
@@ -776,6 +895,202 @@ function roi(){
 }
 ['msgs','min','rate','auto'].forEach(function(id){el(id).addEventListener('input',roi);});
 roi();
+
+/* ---------- live sandbox: type a message, get a simulated triage ---------- */
+function addLine(body,kind,html){
+  var d=document.createElement('div');
+  d.className='wl '+kind;
+  var who = kind==='guest' ? '<span class="who">guest</span>' : (kind==='agent' ? '<span class="who">omniagent</span>' : '');
+  d.innerHTML=who+html;
+  body.appendChild(d);
+  return d;
+}
+function classifyMsg(text){
+  var t=text.toLowerCase();
+  if(/\b(table|book|reserve|reservation|appointment|slot|available|availability|schedule|reschedule)\b/.test(t))return'booking';
+  if(/\b(refund|broken|damaged|complain|complaint|angry|cancel|wrong|missing|late|awful|terrible|bad|disappointed)\b/.test(t))return'complaint';
+  if(/\b(invoice|quote|price|cost|pay|payment|overdue|bill|balance|owe)\b/.test(t))return'finance';
+  if(/\b(review|feedback|rating|how was|experience)\b/.test(t))return'feedback';
+  if(/\b(hi|hello|hey|thanks|thank you|sup)\b/.test(t))return'greeting';
+  return'unknown';
+}
+var TRY_TEMPLATES={
+  booking:{tool:'<span class="arr">&rsaquo;</span> check_availability &middot; simulated',reply:"I'd check real availability right now and offer you the nearest open slot — then hold it only after you reply CONFIRM. Nothing gets booked before that."},
+  complaint:{tool:'<span class="arr">&rsaquo;</span> create_support_ticket &middot; simulated',reply:"I'm sorry to hear that. I'd resolve this from your documented policy where I can, or open a ticket with the full context so a human follows up fast."},
+  finance:{tool:'<span class="arr">&rsaquo;</span> quickbooks_query &middot; simulated',reply:"I'd pull that straight from your live books — real numbers, never estimates — and hold any write until you type CONFIRM."},
+  feedback:{reply:"I'd say thanks personally, then walk you to the review link if you're happy — or quietly bring in a human if you're not. Either way, nothing public without asking."},
+  greeting:{reply:"Hey! Ask me anything about hours, pricing, bookings or policy — whatever's in the documents I've been given for this business."},
+  unknown:{gate:true,reply:"That's not something in the knowledge base for this demo — a real Omniagent says so plainly and offers a human, rather than guessing. This refusal is the feature, not a bug."}
+};
+var tryForm=document.getElementById('tryForm'),tryInput=document.getElementById('tryInput');
+if(tryForm){
+  tryForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var text=tryInput.value.trim();
+    if(!text)return;
+    tryInput.value='';
+    var body=document.getElementById('avBody');
+    addLine(body,'guest',text.replace(/</g,'&lt;'));
+    body.scrollTop=body.scrollHeight;
+    var typing=addLine(body,'tool','<span class="arr">&rsaquo;</span> thinking&hellip;');
+    body.scrollTop=body.scrollHeight;
+    setTimeout(function(){
+      typing.remove();
+      var cat=classifyMsg(text),tmpl=TRY_TEMPLATES[cat];
+      if(tmpl.tool)addLine(body,'tool',tmpl.tool);
+      addLine(body,tmpl.gate?'gate':'agent',tmpl.reply);
+      body.scrollTop=body.scrollHeight;
+    },650+Math.random()*450);
+  });
+}
+
+/* ---------- persona switcher: re-personalizes the whole page ---------- */
+var PERSONAS=[
+  {key:'restaurant',label:'Restaurant / salon',agent:3,night:2,note:0,roi:{msgs:60,min:3,rate:20,auto:80},blurb:'Reservations handles the 11pm booking; the Reputation Loop keeps your rating climbing.'},
+  {key:'ecommerce',label:'E-commerce / retail',agent:1,night:0,note:1,roi:{msgs:90,min:5,rate:24,auto:70},blurb:'Support triages photos and tickets; the Night Auditor reconciles the day’s orders while you sleep.'},
+  {key:'trades',label:'Trades / agency (quotes)',agent:2,night:1,note:2,roi:{msgs:25,min:6,rate:35,auto:65},blurb:'The Bookkeeper reads your live books; the Chaser collects the quotes that went quiet.'},
+  {key:'clinic',label:'Clinic / services',agent:3,night:0,note:3,roi:{msgs:45,min:4,rate:28,auto:75},blurb:'Reservations runs the calendar; the Night Auditor flags anything the front desk missed.'},
+  {key:'b2b',label:'B2B / SaaS',agent:4,night:1,note:4,roi:{msgs:30,min:8,rate:45,auto:60},blurb:'The Sales Qualifier greets every lead in seconds; the Chaser keeps proposals from going cold.'},
+  {key:'other',label:'Something else',agent:0,night:0,note:5,roi:{msgs:40,min:4,rate:22,auto:75},blurb:'Start with the Concierge — it answers from your documents and routes the rest.'}
+];
+var personaChipsEl=document.getElementById('personaChips'),personaClearEl=document.getElementById('personaClear'),personaTagEl=document.getElementById('personaTag');
+var personaActive=null;
+PERSONAS.forEach(function(p){
+  var c=document.createElement('div');
+  c.className='pchip';c.textContent=p.label;
+  c.addEventListener('click',function(){
+    if(personaActive===p.key){clearPersona();return;}
+    applyPersona(p);
+  });
+  personaChipsEl.appendChild(c);
+});
+function setSliders(roiVals){
+  el('msgs').value=roiVals.msgs;el('min').value=roiVals.min;el('rate').value=roiVals.rate;el('auto').value=roiVals.auto;
+  roi();
+}
+function applyPersona(p){
+  personaActive=p.key;
+  try{localStorage.setItem('omni_persona',p.key);}catch(e){}
+  Array.prototype.forEach.call(personaChipsEl.children,function(c,i){c.classList.toggle('on',PERSONAS[i].key===p.key);});
+  personaClearEl.classList.add('show');
+  personaTagEl.style.display='inline-flex';
+  personaTagEl.innerHTML='Tailored for <b style="font-weight:600">'+p.label+'</b> — '+p.blurb+' <button type="button" id="personaTagClear">change</button>';
+  document.getElementById('personaTagClear').addEventListener('click',clearPersona);
+  selectAgentIndex(p.agent);
+  document.querySelectorAll('.nrow').forEach(function(row,i){row.classList.toggle('match',i===p.night);});
+  document.querySelectorAll('.notes .note').forEach(function(row,i){row.classList.toggle('match',i===p.note);});
+  setSliders(p.roi);
+}
+function clearPersona(){
+  personaActive=null;
+  try{localStorage.removeItem('omni_persona');}catch(e){}
+  Array.prototype.forEach.call(personaChipsEl.children,function(c){c.classList.remove('on');});
+  personaClearEl.classList.remove('show');
+  personaTagEl.style.display='none';
+  document.querySelectorAll('.nrow').forEach(function(row){row.classList.remove('match');});
+  document.querySelectorAll('.notes .note').forEach(function(row){row.classList.remove('match');});
+  setSliders({msgs:40,min:4,rate:22,auto:75});
+}
+personaClearEl.addEventListener('click',clearPersona);
+(function initPersona(){
+  var saved=null;
+  try{saved=localStorage.getItem('omni_persona');}catch(e){}
+  if(saved){var match=PERSONAS.filter(function(p){return p.key===saved;})[0];if(match)applyPersona(match);}
+})();
+
+/* ---------- build your stack ---------- */
+var B_AGENTS=[{k:'concierge',l:'Concierge'},{k:'support',l:'Support Agent'},{k:'bookkeeper',l:'Bookkeeper'},{k:'reservations',l:'Reservations'},{k:'sales',l:'Sales Qualifier'}];
+var B_NIGHT=[{k:'auditor',l:'Night Auditor'},{k:'chaser',l:'The Chaser'},{k:'loop',l:'Reputation Loop'}];
+var bSel={agents:[],night:[]};
+(function(){try{var saved=JSON.parse(localStorage.getItem('omni_build')||'null');if(saved&&saved.agents&&saved.night)bSel=saved;}catch(e){}})();
+function renderChips(containerId,list,selArr){
+  var c=document.getElementById(containerId);
+  c.innerHTML='';
+  list.forEach(function(item){
+    var b=document.createElement('div');
+    b.className='bchip'+(selArr.indexOf(item.k)>-1?' on':'');
+    b.textContent=item.l;
+    b.addEventListener('click',function(){
+      var idx=selArr.indexOf(item.k);
+      if(idx>-1)selArr.splice(idx,1);else selArr.push(item.k);
+      b.classList.toggle('on');
+      updateBuild();
+    });
+    c.appendChild(b);
+  });
+}
+function updateBuild(){
+  try{localStorage.setItem('omni_build',JSON.stringify(bSel));}catch(e){}
+  var nA=bSel.agents.length,nN=bSel.night.length,tier='—',est='—';
+  if(nA===5&&nN===3){tier='The System';est='Price on application';}
+  else if(nA>=4||nN>=2){tier='Scale';est='Custom';}
+  else if(nA>=1&&(nA>1||nN>=1)){tier='Growth';est='$399/mo';}
+  else if(nA===1){tier='Starter';est='$149/mo';}
+  document.getElementById('bTier').textContent=tier;
+  document.getElementById('bEst').textContent=est;
+  var agentNames=bSel.agents.map(function(k){return B_AGENTS.filter(function(a){return a.k===k;})[0].l;});
+  var nightNames=bSel.night.map(function(k){return B_NIGHT.filter(function(a){return a.k===k;})[0].l;});
+  var summary=(nA===0&&nN===0)?'Select a few things to see your build.':
+    'Your build: '+(agentNames.length?agentNames.join(', '):'no agents yet')+(nightNames.length?' — plus '+nightNames.join(', '):'')+'.';
+  document.getElementById('bSummary').textContent=summary;
+  var body='My build:%0A- Agents: '+encodeURIComponent(agentNames.join(', ')||'none yet')+'%0A- Night shift: '+encodeURIComponent(nightNames.join(', ')||'none yet')+'%0A- Suggested tier: '+encodeURIComponent(tier);
+  document.getElementById('bCta').href='mailto:hello@omniagent.ai?subject=My%20Omniagent%20build&body='+body;
+}
+renderChips('bAgents',B_AGENTS,bSel.agents);
+renderChips('bNight',B_NIGHT,bSel.night);
+updateBuild();
+
+/* ---------- command palette (Cmd/Ctrl+K) ---------- */
+var CMDK_ITEMS=[
+  {t:'Hero',t2:'top',href:'#top'},
+  {t:'Four moves — how it works',t2:'operation',href:'#how'},
+  {t:'The staff — five agents',t2:'agents',href:'#staff'},
+  {t:'The night shift',t2:'automation',href:'#night'},
+  {t:'Send it anything — intake',t2:'formats',href:'#inputs'},
+  {t:'Controls — why it is allowed',t2:'trust',href:'#controls'},
+  {t:'The math — ROI calculator',t2:'ledger',href:'#math'},
+  {t:'Price list',t2:'plans',href:'#price'},
+  {t:'Build your stack',t2:'builder',href:'#builder'},
+  {t:'The System — application only',t2:'flagship',href:'#system'},
+  {t:'Field notes',t2:'proof',href:'#notes'},
+  {t:'Questions — FAQ',t2:'faq',href:'#faq'},
+  {t:'Book a demo',t2:'contact',href:'#final'}
+];
+var cmdkOverlay=document.getElementById('cmdkOverlay'),cmdkInput=document.getElementById('cmdkInput'),cmdkList=document.getElementById('cmdkList');
+var cmdkSel=0,cmdkFiltered=CMDK_ITEMS.slice();
+function cmdkRender(){
+  cmdkList.innerHTML='';
+  cmdkFiltered.forEach(function(item,i){
+    var d=document.createElement('div');
+    d.className='cmdk-item'+(i===cmdkSel?' sel':'');
+    d.innerHTML='<span>'+item.t+'</span><span class="t2">'+item.t2+'</span>';
+    d.addEventListener('click',function(){cmdkGo(item.href);});
+    cmdkList.appendChild(d);
+  });
+}
+function cmdkOpen(){
+  cmdkOverlay.classList.add('open');cmdkInput.value='';cmdkFiltered=CMDK_ITEMS.slice();cmdkSel=0;cmdkRender();
+  setTimeout(function(){cmdkInput.focus();},10);
+}
+function cmdkClose(){cmdkOverlay.classList.remove('open');}
+function cmdkGo(href){cmdkClose();var target=document.querySelector(href);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});}
+document.getElementById('cmdkHint').addEventListener('click',cmdkOpen);
+cmdkOverlay.addEventListener('click',function(e){if(e.target===cmdkOverlay)cmdkClose();});
+cmdkInput.addEventListener('input',function(){
+  var q=cmdkInput.value.toLowerCase();
+  cmdkFiltered=CMDK_ITEMS.filter(function(it){return it.t.toLowerCase().indexOf(q)>-1||it.t2.toLowerCase().indexOf(q)>-1;});
+  cmdkSel=0;cmdkRender();
+});
+cmdkInput.addEventListener('keydown',function(e){
+  if(e.key==='ArrowDown'){e.preventDefault();cmdkSel=Math.min(cmdkSel+1,cmdkFiltered.length-1);cmdkRender();}
+  else if(e.key==='ArrowUp'){e.preventDefault();cmdkSel=Math.max(cmdkSel-1,0);cmdkRender();}
+  else if(e.key==='Enter'){e.preventDefault();if(cmdkFiltered[cmdkSel])cmdkGo(cmdkFiltered[cmdkSel].href);}
+  else if(e.key==='Escape'){cmdkClose();}
+});
+document.addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();cmdkOverlay.classList.contains('open')?cmdkClose():cmdkOpen();}
+  else if(e.key==='Escape'&&cmdkOverlay.classList.contains('open')){cmdkClose();}
+});
 </script>
 </body>
 </html>
