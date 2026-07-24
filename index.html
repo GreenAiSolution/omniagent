@@ -66,7 +66,7 @@ nav.top{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1
 .hero p.sub{font-size:18px;color:var(--ink-soft);max-width:52ch;line-height:1.6;opacity:0;animation:fadeu .8s .9s forwards}
 @keyframes fadeu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .hero p.sub b{color:var(--ink);font-weight:600}
-.hero-actions{display:flex;margin-top:40px;border:1px solid var(--rule);width:max-content;opacity:0;animation:fadeu .8s 1.15s forwards}
+.hero-actions{display:flex;margin-top:40px;border:1px solid var(--rule);width:max-content;max-width:100%;opacity:0;animation:fadeu .8s 1.15s forwards}
 .hero-actions a{padding:15px 26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;transition:.15s;position:relative;overflow:hidden}
 .hero-actions a.primary{background:var(--ink);color:var(--paper)}
 .hero-actions a.primary:hover{background:var(--forest);color:var(--lime)}
@@ -247,7 +247,7 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 /* ---------- THE SYSTEM ---------- */
 .system{background:#0b0a08;color:var(--paper);border-bottom:1px solid #0b0a08;position:relative;overflow:hidden}
 .system:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 75% 30%,rgba(217,185,106,.07),transparent 60%),radial-gradient(50% 70% at 15% 85%,rgba(198,243,107,.05),transparent 60%)}
-.system-in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:70px;padding:110px 0;align-items:center}
+.system-in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:70px;padding-top:110px;padding-bottom:110px;align-items:center}
 .system .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 .system h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,4.6vw,68px);letter-spacing:-.02em;line-height:1.02;margin:22px 0 24px}
 .system h2 em{font-style:italic;font-weight:300;color:var(--gold)}
@@ -278,13 +278,13 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 .sc-bot{display:flex;justify-content:space-between;align-items:flex-end;position:relative}
 .sc-bot .holder{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#a39d90}
 .sc-bot .price{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right}
-.sys-cta-row{display:flex;gap:0;margin-top:38px;border:1px solid rgba(242,238,227,.35);width:max-content}
+.sys-cta-row{display:flex;gap:0;margin-top:38px;border:1px solid rgba(242,238,227,.35);width:max-content;max-width:100%}
 .sys-cta-row a{padding:16px 30px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:.2s}
 .sys-cta-row a.gold{background:var(--gold);color:#0b0a08}
 .sys-cta-row a.gold:hover{background:#e9cd85}
 .sys-cta-row a.quiet{border-left:1px solid rgba(242,238,227,.35);color:#a39d90}
 .sys-cta-row a.quiet:hover{color:var(--paper)}
-@media(max-width:960px){.system-in{grid-template-columns:1fr;gap:54px;padding:80px 0}}
+@media(max-width:960px){.system-in{grid-template-columns:1fr;gap:54px;padding-top:80px;padding-bottom:80px}}
 
 /* ---------- field notes ---------- */
 .notes{border-top:1px solid var(--rule)}
@@ -315,7 +315,7 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 
 /* ---------- final ---------- */
 .final{background:var(--ink);color:var(--paper);border-bottom:1px solid var(--ink)}
-.final-in{padding:96px 0;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end}
+.final-in{padding-top:96px;padding-bottom:96px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end}
 .final h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5vw,74px);letter-spacing:-.02em;line-height:1}
 .final h2 em{font-style:italic;font-weight:300;color:var(--lime)}
 .final p{color:#b6b0a4;margin-top:18px;max-width:52ch;font-size:16px}
@@ -324,7 +324,7 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 @media(max-width:820px){.final-in{grid-template-columns:1fr}}
 
 footer{background:var(--ink);color:#8a8478}
-.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:26px 0;border-top:1px solid rgba(242,238,227,.14);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;padding-bottom:26px;border-top:1px solid rgba(242,238,227,.14);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
 footer a:hover{color:var(--paper)}
 
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
@@ -332,7 +332,7 @@ footer a:hover{color:var(--paper)}
 
 /* ---------- persona switcher ---------- */
 .persona-bar{background:var(--paper-2);border-bottom:1px solid var(--rule)}
-.persona-in{display:flex;align-items:center;gap:14px;padding:14px 0;flex-wrap:wrap}
+.persona-in{display:flex;align-items:center;gap:14px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
 .persona-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
 .persona-chips{display:flex;flex-wrap:wrap;gap:8px;flex:1}
 .pchip{border:1px solid var(--hair);padding:7px 14px;font-family:var(--mono);font-size:11.5px;cursor:pointer;transition:.15s;background:var(--paper)}
@@ -396,6 +396,74 @@ footer a:hover{color:var(--paper)}
 .cmdk-item:hover,.cmdk-item.sel{background:var(--ink);color:var(--paper)}
 .cmdk-item:hover .t2,.cmdk-item.sel .t2{color:#a9a397}
 .cmdk-foot{display:flex;gap:16px;padding:10px 20px;border-top:1px solid var(--hair);font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.06em}
+
+/* ---------- ELI5 plain-english band ---------- */
+.eli5{background:var(--paper-2);border-bottom:1px solid var(--rule)}
+.eli5-in{display:flex;align-items:baseline;gap:18px;padding-top:30px;padding-bottom:30px;flex-wrap:wrap}
+.eli5-mark{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--forest);background:var(--lime);padding:5px 10px;white-space:nowrap}
+.eli5 p{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(17px,2vw,22px);letter-spacing:-.005em;color:var(--ink);max-width:62ch;line-height:1.45}
+
+/* ---------- proof strip: real, cited numbers ---------- */
+.proof{background:var(--forest);color:#dfe8dd;border-bottom:1px solid var(--rule)}
+.proof-in{padding-top:56px;padding-bottom:56px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:center}
+.proof .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.proof h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.6vw,32px);letter-spacing:-.01em;margin:14px 0 26px;line-height:1.15}
+.pbar-row{margin-bottom:18px}
+.pbar-lbl{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:12px;color:#b9c9b6;margin-bottom:8px}
+.pbar-lbl b{color:var(--paper);font-weight:500;font-size:14px}
+.pbar-lbl b.hi-val{color:var(--lime)}
+.pbar-track{height:20px;background:rgba(242,238,227,.08);position:relative}
+.pbar-fill{height:100%;background:#3a4f42;width:0%;transition:width 1.1s cubic-bezier(.16,.8,.2,1)}
+.pbar-fill.hi{background:var(--lime)}
+.proof-src{font-family:var(--mono);font-size:10.5px;color:#7a9482;margin-top:14px}
+.proof-stat{border-left:1px solid rgba(198,243,107,.25);padding-left:40px}
+.proof-stat .n{font-family:var(--serif);font-weight:400;font-size:clamp(46px,5.4vw,72px);letter-spacing:-.02em;line-height:1;color:var(--paper)}
+.proof-stat .l{font-size:15.5px;color:#b9c9b6;margin-top:12px;max-width:32ch;line-height:1.5}
+.proof-stat .proof-src{margin-top:16px}
+@media(max-width:860px){.proof-in{grid-template-columns:1fr;gap:40px}.proof-stat{border-left:0;padding-left:0;border-top:1px solid rgba(198,243,107,.2);padding-top:32px}}
+
+/* ---------- how-it-works flow diagram ---------- */
+.flow{display:flex;align-items:flex-start;gap:6px;margin-top:8px;flex-wrap:wrap}
+.fnode{flex:1;min-width:150px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:6px 4px}
+.ficon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--lime);flex:none}
+.ficon svg{width:19px;height:19px;stroke:var(--forest);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.flabel{font-size:14.5px;font-weight:600;line-height:1.35}
+.fsub{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.02em}
+.farrow{align-self:center;font-family:var(--mono);font-size:20px;color:var(--ink-soft);padding:0 2px;margin-top:19px}
+@media(max-width:860px){.flow{flex-direction:column;gap:22px}.farrow{display:none}}
+
+/* ---------- night shift 24h timeline ---------- */
+.dayline{margin-top:46px}
+.dayline-track{position:relative;height:2px;background:rgba(242,238,227,.18);margin:8px 4px 54px}
+.dl-tick{position:absolute;top:-22px;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:#6b6558}
+.dl-point{position:absolute;top:-6px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;cursor:default}
+.dl-dot{width:11px;height:11px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 5px rgba(198,243,107,.14);transition:box-shadow .2s}
+.dl-point:hover .dl-dot{box-shadow:0 0 0 8px rgba(198,243,107,.22)}
+.dl-point.loop .dl-dot{background:var(--gold);box-shadow:0 0 0 5px rgba(217,185,106,.16)}
+.dl-point.loop:hover .dl-dot{box-shadow:0 0 0 8px rgba(217,185,106,.24)}
+.dl-lbl{margin-top:12px;font-family:var(--mono);font-size:10.5px;color:#b9c9b6;text-align:center;line-height:1.55;white-space:nowrap}
+.dl-lbl b{color:var(--paper);font-weight:500;display:block}
+@media(max-width:700px){.dl-lbl{font-size:9.5px}.dayline-track{margin:8px 20px 54px}}
+
+/* ---------- ROI ledger bars ---------- */
+.lblock{display:flex;flex-direction:column;gap:9px}
+.lbar{height:5px;background:var(--hair);overflow:hidden}
+.lbar-fill{height:100%;width:0%;background:var(--lime);transition:width .6s cubic-bezier(.16,.8,.2,1)}
+.lbar-fill.gold{background:var(--gold)}
+
+/* ---------- fun: confetti + micro-delight ---------- */
+.confetti-bit{position:fixed;z-index:200;pointer-events:none;border-radius:1px;will-change:transform,opacity}
+@keyframes confetti-burst{to{transform:translate(var(--cx),var(--cy)) rotate(var(--cr));opacity:0}}
+.bstat{transition:transform .2s ease}
+.bstat:hover{transform:translateY(-3px)}
+.brand .sq{transition:transform .4s ease}
+.brand:hover .sq{transform:rotate(180deg)}
+
+/* ---------- overflow safety net: flex/grid children default to min-width:auto,
+   which lets long uppercase mono labels force their track wider than the
+   viewport. Reset the chains that hold such labels back to 0 so they wrap
+   instead of pushing the page into horizontal scroll. ---------- */
+.hero-grid>*,.system-in>*,.card-stage,.syscard,.hero-actions,.hero-actions a,.sys-cta-row,.sys-cta-row a{min-width:0}
 </style>
 </head>
 <body>
@@ -451,6 +519,13 @@ footer a:hover{color:var(--paper)}
   </div>
 </header>
 
+<section class="eli5">
+  <div class="wrap eli5-in">
+    <span class="eli5-mark">In plain English</span>
+    <p>It's a smart employee that lives in your WhatsApp. It answers customers honestly using only what you've told it, never spends a cent without asking first, and keeps working after everyone else has gone home.</p>
+  </div>
+</section>
+
 <div class="band">
   <div class="wrap band-in">
     <div class="bstat"><div class="v"><span class="cnt" data-to="60" data-pre="&lt; " data-suf="">&lt; 0</span><small> sec</small></div><div class="l">Median first reply</div></div>
@@ -459,6 +534,29 @@ footer a:hover{color:var(--paper)}
     <div class="bstat"><div class="v"><span class="cnt" data-to="0" data-pre="$">$0</span></div><div class="l">Per-message markup</div></div>
   </div>
 </div>
+
+<section class="proof">
+  <div class="wrap proof-in">
+    <div class="reveal">
+      <span class="eyebrow">Why speed wins</span>
+      <h3>The business that answers first<br />usually wins the customer.</h3>
+      <div class="pbar-row">
+        <div class="pbar-lbl"><span>Average business reply time</span><b>42 hrs</b></div>
+        <div class="pbar-track"><div class="pbar-fill" id="pbar1" style="width:0%"></div></div>
+      </div>
+      <div class="pbar-row">
+        <div class="pbar-lbl"><span>Omniagent</span><b class="hi-val">&lt; 60 sec</b></div>
+        <div class="pbar-track"><div class="pbar-fill hi" id="pbar2" style="width:0%"></div></div>
+      </div>
+      <p class="proof-src">Replying within the first minute converts up to 391% better than a slow one — Velocify lead-response research.</p>
+    </div>
+    <div class="proof-stat reveal">
+      <div class="n">175M+</div>
+      <p class="l">people message a business on WhatsApp <b style="color:var(--paper)">every single day</b> — it's already where your customers are.</p>
+      <p class="proof-src">— Meta, WhatsApp Business usage figures</p>
+    </div>
+  </div>
+</section>
 
 <section class="sec" id="how">
   <div class="wrap">
@@ -473,6 +571,31 @@ footer a:hover{color:var(--paper)}
       <div class="step"><div class="n serif">ii.</div><h3>Feed it the truth</h3><p>Menus, price lists, policies, FAQs, PDFs. That becomes the only thing it is allowed to say.</p></div>
       <div class="step"><div class="n serif">iii.</div><h3>Pick its job</h3><p>Support, bookings, bookkeeping, sales — each role ships with the right tools already wired.</p></div>
       <div class="step"><div class="n serif">iv.</div><h3>It works, or it hands off</h3><p>What it can do, it does. What it can't, it escalates to a human — with the full story attached.</p></div>
+    </div>
+    <div class="flow reveal" style="border-top:1px solid var(--rule);padding-top:36px">
+      <div class="fnode">
+        <span class="ficon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg></span>
+        <span class="flabel">A message arrives</span>
+        <span class="fsub">text · voice · photo · pdf</span>
+      </div>
+      <span class="farrow">&rarr;</span>
+      <div class="fnode">
+        <span class="ficon"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg></span>
+        <span class="flabel">Checked against your documents</span>
+        <span class="fsub">retrieval, not memory</span>
+      </div>
+      <span class="farrow">&rarr;</span>
+      <div class="fnode">
+        <span class="ficon"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>
+        <span class="flabel">Answers &amp; cites — or says so, and escalates</span>
+        <span class="fsub">never a guess</span>
+      </div>
+      <span class="farrow">&rarr;</span>
+      <div class="fnode">
+        <span class="ficon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <span class="flabel">Anything irreversible waits</span>
+        <span class="fsub">for a typed CONFIRM</span>
+      </div>
     </div>
   </div>
 </section>
@@ -532,6 +655,18 @@ footer a:hover{color:var(--paper)}
       </div>
     </div>
     <p class="night-note">All three run on the same engine, same controls — <b>grounded, gated, logged</b>. Outbound messages respect WhatsApp's messaging windows and use approved templates. Nothing sends that you haven't sanctioned.</p>
+    <div class="dayline reveal" aria-hidden="true">
+      <div class="dayline-track">
+        <span class="dl-tick" style="left:0%">00:00</span>
+        <span class="dl-tick" style="left:25%">06:00</span>
+        <span class="dl-tick" style="left:50%">12:00</span>
+        <span class="dl-tick" style="left:75%">18:00</span>
+        <span class="dl-tick" style="left:100%">24:00</span>
+        <div class="dl-point" style="left:8.3%"><span class="dl-dot"></span><span class="dl-lbl"><b>02:00</b>Auditor</span></div>
+        <div class="dl-point" style="left:37.5%"><span class="dl-dot"></span><span class="dl-lbl"><b>09:00</b>Chaser</span></div>
+        <div class="dl-point loop" style="left:96%"><span class="dl-dot"></span><span class="dl-lbl"><b>+1 day</b>Loop</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -589,8 +724,14 @@ footer a:hover{color:var(--paper)}
         <div class="lslider" style="margin-bottom:0"><label>Handled without a human <output id="vAuto">75%</output></label><input type="range" id="auto" min="30" max="95" value="75" step="5" /></div>
       </div>
       <div class="ledger-out">
-        <div class="lline"><span class="lbl">Staff hours returned / mo</span><span class="dots"></span><span class="val" id="oHrs">—</span></div>
-        <div class="lline"><span class="lbl">Value recovered / mo</span><span class="dots"></span><span class="val" id="oSave">—</span></div>
+        <div class="lblock">
+          <div class="lline"><span class="lbl">Staff hours returned / mo</span><span class="dots"></span><span class="val" id="oHrs">—</span></div>
+          <div class="lbar"><div class="lbar-fill" id="oHrsBar"></div></div>
+        </div>
+        <div class="lblock">
+          <div class="lline"><span class="lbl">Value recovered / mo</span><span class="dots"></span><span class="val" id="oSave">—</span></div>
+          <div class="lbar"><div class="lbar-fill gold" id="oSaveBar"></div></div>
+        </div>
         <div class="lline"><span class="lbl">Payback on $399/mo</span><span class="dots"></span><span class="val" id="oPay">—</span></div>
         <p class="ledger-note">Excludes the part that's hard to put on a slider: the 11pm booking that didn't go to the restaurant that answered.</p>
       </div>
@@ -892,6 +1033,8 @@ function roi(){
   el('oSave').textContent=money(save);
   var pay=save>0?399/save:0;
   el('oPay').innerHTML=pay<=0?'—':(pay<1?Math.max(1,Math.round(pay*30))+'<small> days</small>':pay.toFixed(1)+'<small> mo</small>');
+  el('oHrsBar').style.width=Math.min(100,hrs/150*100)+'%';
+  el('oSaveBar').style.width=Math.min(100,save/6000*100)+'%';
 }
 ['msgs','min','rate','auto'].forEach(function(id){el(id).addEventListener('input',roi);});
 roi();
@@ -1090,6 +1233,43 @@ cmdkInput.addEventListener('keydown',function(e){
 document.addEventListener('keydown',function(e){
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();cmdkOverlay.classList.contains('open')?cmdkClose():cmdkOpen();}
   else if(e.key==='Escape'&&cmdkOverlay.classList.contains('open')){cmdkClose();}
+});
+
+/* ---------- proof bars: animate width once on screen ---------- */
+var pio=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(!e.isIntersecting)return;pio.unobserve(e.target);
+  requestAnimationFrame(function(){
+    document.getElementById('pbar1').style.width='92%';
+    document.getElementById('pbar2').style.width='3%';
+  });
+});},{threshold:.4});
+var proofSec=document.querySelector('.proof');
+if(proofSec)pio.observe(proofSec);
+
+/* ---------- confetti: fires on real commitment moments ---------- */
+function burstConfetti(x,y){
+  var colors=['#c6f36b','#d9b96a','#0e2f22'];
+  for(var i=0;i<20;i++){
+    var b=document.createElement('div');
+    b.className='confetti-bit';
+    var size=4+Math.random()*4;
+    b.style.width=size+'px';b.style.height=size+'px';
+    b.style.left=x+'px';b.style.top=y+'px';
+    b.style.background=colors[i%colors.length];
+    var angle=Math.random()*Math.PI*2,dist=60+Math.random()*90;
+    b.style.setProperty('--cx',(Math.cos(angle)*dist)+'px');
+    b.style.setProperty('--cy',(Math.sin(angle)*dist+40)+'px');
+    b.style.setProperty('--cr',(Math.random()*360)+'deg');
+    b.style.animation='confetti-burst '+(700+Math.random()*500)+'ms cubic-bezier(.2,.7,.3,1) forwards';
+    document.body.appendChild(b);
+    (function(el){setTimeout(function(){el.remove();},1300);})(b);
+  }
+}
+document.querySelectorAll('.final .go, .build-cta').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var r=a.getBoundingClientRect();
+    burstConfetti(r.left+r.width/2,r.top+r.height/2);
+  });
 });
 </script>
 </body>
