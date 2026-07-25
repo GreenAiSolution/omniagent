@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claim your assembly — Omniagent</title>
+<meta name="description" content="Pick your crew — the Assembly of Three, Seven or Fifteen — tell us where to deploy it, and be live on your WhatsApp number within 48 hours of payment." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f2eee3; --paper-2:#eae5d6; --ink:#171512; --ink-soft:#4c463c;
+  --rule:#171512; --hair:rgba(23,21,18,.18);
+  --forest:#0e2f22; --lime:#c6f36b; --lime-dim:#a8d94e; --gold:#d9b96a;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--lime);color:var(--ink)}
+.wrap{max-width:880px;margin:0 auto;padding:0 28px}
+.k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+:focus-visible{outline:2px solid var(--forest);outline-offset:2px}
+
+nav.top{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top-in{display:flex;align-items:stretch;justify-content:space-between;height:58px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em}
+.brand .sq{width:13px;height:13px;background:var(--ink);position:relative;flex:none}
+.brand .sq:after{content:"";position:absolute;inset:3px;background:var(--lime)}
+.top-links{display:flex;align-items:stretch}
+.top-links a{display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--hair);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;transition:background .15s}
+.top-links a:hover{background:var(--paper-2)}
+
+.hero{border-bottom:1px solid var(--rule);padding-top:56px;padding-bottom:48px}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-.02em;margin:18px 0 18px}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero p{color:var(--ink-soft);max-width:58ch;font-size:16px;line-height:1.65}
+
+.step{border-bottom:1px solid var(--rule);padding-top:44px;padding-bottom:48px}
+.step .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);display:block;margin-bottom:12px}
+.step h2{font-family:var(--serif);font-weight:400;font-size:clamp(22px,3vw,30px);letter-spacing:-.01em;margin-bottom:22px}
+.step h2 em{font-style:italic;font-weight:300}
+
+/* assembly picker */
+.pick{display:flex;flex-direction:column;border:1px solid var(--rule)}
+.pick-row{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:20px;align-items:center;padding:22px 22px;border-bottom:1px solid var(--hair);cursor:pointer;transition:background .15s;background:var(--paper)}
+.pick-row:last-child{border-bottom:0}
+.pick-row:hover{background:var(--paper-2)}
+.pick-row.on{background:var(--forest);color:#dfe8dd}
+.pick-row .rn{font-family:var(--serif);font-style:italic;font-weight:300;font-size:30px;letter-spacing:-.02em}
+.pick-row.on .rn{color:var(--lime)}
+.pick-row .nm{font-family:var(--serif);font-size:18px}
+.pick-row .ds{font-size:13px;color:var(--ink-soft);margin-top:3px}
+.pick-row.on .ds{color:#b9c9b6}
+.pick-row .pr{font-family:var(--mono);font-size:13px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pick-row .pr small{display:block;font-size:10.5px;color:var(--ink-soft);margin-top:3px}
+.pick-row.on .pr{color:var(--lime)}
+.pick-row.on .pr small{color:#8fa38c}
+
+/* seat chips */
+.seats{display:none}
+.seats.show{display:block}
+.seat-group{margin-bottom:22px}
+.seat-group .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding:10px 16px;border:1px solid var(--hair);cursor:pointer;transition:.15s;background:var(--paper)}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--lime);border-color:var(--ink)}
+
+/* form */
+.frm{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.frm .field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.frm .field.full{grid-column:1/-1}
+.frm label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.frm input,.frm textarea{font-family:var(--sans);font-size:15px;padding:13px 14px;border:1px solid var(--hair);background:var(--paper);color:var(--ink);width:100%;min-width:0}
+.frm input:focus,.frm textarea:focus{outline:2px solid var(--forest);outline-offset:0;border-color:var(--forest)}
+.frm textarea{resize:vertical;min-height:88px}
+@media(max-width:640px){.frm{grid-template-columns:1fr}}
+
+/* submit */
+.go-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:26px}
+.go{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:18px 32px;transition:.15s;border:0;cursor:pointer}
+.go:hover{background:var(--forest);color:var(--lime)}
+.go.pay{background:var(--lime);color:var(--ink)}
+.go.pay:hover{background:var(--lime-dim)}
+.go-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);max-width:40ch;line-height:1.6}
+#summary{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);border-left:2px solid var(--lime);padding:12px 16px;background:var(--paper-2);margin-bottom:24px;line-height:1.7}
+#summary b{color:var(--ink)}
+
+/* next steps */
+.next{counter-reset:n}
+.next .nrow2{counter-increment:n;position:relative;padding:20px 0 20px 56px;border-bottom:1px solid var(--hair);max-width:64ch}
+.next .nrow2:last-child{border-bottom:0}
+.next .nrow2:before{content:"0" counter(n);position:absolute;left:0;top:20px;font-family:var(--mono);font-size:13px;color:var(--forest)}
+.next .nrow2 b{display:block;font-size:16px;margin-bottom:4px}
+.next .nrow2 p{font-size:14px;color:var(--ink-soft)}
+.fine{padding:26px 0 60px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);line-height:1.9;max-width:74ch}
+
+footer{background:var(--ink);color:#8a8478}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;padding-bottom:26px;font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+footer a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="index.html"><span class="sq"></span>Omniagent</a>
+    <div class="top-links">
+      <a href="index.html#assemblies">The assemblies</a>
+      <a href="index.html#final">Talk first</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="k" style="color:var(--ink-soft)">Claim — no account, no card stored, no forms with forty fields</span>
+    <h1>Claim your assembly.<br /><em>Live in 48 hours.</em></h1>
+    <p>Pick the crew, tell us where it's going, and send it. You'll get the invoice and your onboarding call within business hours — the crew goes live on your WhatsApp number within 48 hours of payment and materials. Want to see it work first? <a href="index.html#try" style="border-bottom:1px solid var(--ink)">Try the live demo</a>.</p>
+  </div>
+</header>
+
+<section class="step">
+  <div class="wrap">
+    <span class="num">01 / The crew</span>
+    <h2>Pick your assembly.</h2>
+    <div class="pick" id="pick">
+      <div class="pick-row" data-a="III" data-nm="Assembly of Three" data-pr="$399/mo + $900 assembly, once">
+        <span class="rn">III</span>
+        <span><span class="nm">Assembly of Three</span><span class="ds" style="display:block">The counter, covered — answer, book, grow the rating.</span></span>
+        <span class="pr">$399<small>/mo · + $900 once</small></span>
+      </div>
+      <div class="pick-row" data-a="VII" data-nm="Assembly of Seven" data-pr="$899/mo + $1,800 assembly, once">
+        <span class="rn">VII</span>
+        <span><span class="nm">Assembly of Seven</span><span class="ds" style="display:block">The whole floor — four agents plus the full night shift.</span></span>
+        <span class="pr">$899<small>/mo · + $1,800 once</small></span>
+      </div>
+      <div class="pick-row" data-a="XV" data-nm="Assembly of Fifteen" data-pr="$1,299/mo + $3,500 assembly, once">
+        <span class="rn">XV</span>
+        <span><span class="nm">Assembly of Fifteen</span><span class="ds" style="display:block">The machine — every agent, every automation, every channel.</span></span>
+        <span class="pr">$1,299<small>/mo · + $3,500 once</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="step seats" id="seatsIII">
+  <div class="wrap">
+    <span class="num">01.5 / Your seats</span>
+    <h2>The Three lets you <em>choose.</em></h2>
+    <div class="seat-group">
+      <span class="lbl">Specialist seat — what do you lose money on?</span>
+      <div class="chips" data-seat="specialist">
+        <span class="chip on" data-v="Reservations">Reservations</span>
+        <span class="chip" data-v="Support">Support</span>
+        <span class="chip" data-v="Sales Qualifier">Sales Qualifier</span>
+        <span class="chip" data-v="Order Tracker">Order Tracker</span>
+      </div>
+    </div>
+    <div class="seat-group" style="margin-bottom:0">
+      <span class="lbl">Night seat — what should run while you sleep?</span>
+      <div class="chips" data-seat="night">
+        <span class="chip on" data-v="Reputation Loop">Reputation Loop</span>
+        <span class="chip" data-v="Night Auditor">Night Auditor</span>
+        <span class="chip" data-v="The Chaser">The Chaser</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="step">
+  <div class="wrap">
+    <span class="num">02 / The deployment</span>
+    <h2>Where does it go live?</h2>
+    <div class="frm">
+      <div class="field"><label for="fBiz">Business name</label><input id="fBiz" type="text" placeholder="Franco's Trattoria" maxlength="80" /></div>
+      <div class="field"><label for="fPhone">WhatsApp number to cover (or "need one")</label><input id="fPhone" type="text" placeholder="+1 808 …  ·  or: need one" maxlength="40" /></div>
+      <div class="field"><label for="fKind">What kind of business</label><input id="fKind" type="text" placeholder="restaurant · salon · e-commerce · trades · clinic · b2b" maxlength="60" /></div>
+      <div class="field"><label for="fWhen">When do you want to be live</label><input id="fWhen" type="text" placeholder="this week / this month / just scoping" maxlength="40" /></div>
+      <div class="field full"><label for="fNotes">Anything we should know (optional)</label><textarea id="fNotes" placeholder="Systems you use (booking, QuickBooks, CRM), languages your customers write in, the thing that made you look for this…" maxlength="600"></textarea></div>
+    </div>
+  </div>
+</section>
+
+<section class="step" style="border-bottom:0">
+  <div class="wrap">
+    <span class="num">03 / Send it</span>
+    <h2>Request your invoice.</h2>
+    <div id="summary">Pick an assembly above to see your build here.</div>
+    <div class="go-row">
+      <button class="go" id="send" type="button">Request invoice — claim this build</button>
+      <a class="go pay" id="payNow" href="#" target="_blank" rel="noopener" style="display:none">Pay now</a>
+      <p class="go-note">Opens a pre-filled email — nothing is charged from this page, and nothing is stored anywhere but your device.</p>
+    </div>
+  </div>
+</section>
+
+<section class="step" style="background:var(--paper-2)">
+  <div class="wrap">
+    <span class="num">04 / What happens next</span>
+    <h2>Three steps. <em>Then it's running.</em></h2>
+    <div class="next">
+      <div class="nrow2"><b>We reply within business hours</b><p>Your invoice, the service agreement, and a 20-minute onboarding call — where we collect your documents (menu, price list, policies) and any tool credentials your assembly wires into.</p></div>
+      <div class="nrow2"><b>Payment clears → we assemble</b><p>Your crew is built, stamped with your business, wired to your systems, and smoke-tested — answers cited, refusals clean, every write waiting on CONFIRM.</p></div>
+      <div class="nrow2"><b>Live within 48 hours</b><p>You get a one-page welcome kit and your number simply starts answering. Cancel any month with 30 days' notice; your data is deleted, not archived.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap fine">
+  The fine print, in plain language: month to month after go-live · 30-day notice to cancel · assembly fee refunded in full if we miss go-live by 14 days · fair-use conversation volumes by assembly, and we talk to you before anything changes · your knowledge and threads are isolated to your business, never trained on, deleted on exit. The signed agreement says the same thing with a lawyer's punctuation.
+</div>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 OMNIAGENT</span>
+    <span>ANSWER EVERYTHING · INVENT NOTHING</span>
+    <a href="index.html">BACK TO OMNIAGENT.AI</a>
+  </div>
+</footer>
+
+<script>
+/* Stripe Payment Links — paste yours here and "Pay now" appears automatically. */
+var STRIPE_LINKS = { III: '', VII: '', XV: '' };
+
+var state = { a: null, nm: '', pr: '', specialist: 'Reservations', night: 'Reputation Loop' };
+try { var saved = JSON.parse(localStorage.getItem('omni_claim') || 'null'); if (saved && saved.a) state = saved; } catch (e) {}
+
+var rows = document.querySelectorAll('.pick-row');
+function paint() {
+  rows.forEach(function (r) { r.classList.toggle('on', r.getAttribute('data-a') === state.a); });
+  document.getElementById('seatsIII').classList.toggle('show', state.a === 'III');
+  document.querySelectorAll('.chips').forEach(function (g) {
+    var seat = g.getAttribute('data-seat');
+    g.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-v') === state[seat]); });
+  });
+  var s = document.getElementById('summary');
+  if (!state.a) { s.innerHTML = 'Pick an assembly above to see your build here.'; }
+  else {
+    var extra = state.a === 'III' ? ' · specialist: <b>' + state.specialist + '</b> · night: <b>' + state.night + '</b>' : '';
+    s.innerHTML = 'Your build — <b>' + state.nm + '</b> (' + state.pr + ')' + extra;
+  }
+  var link = state.a && STRIPE_LINKS[state.a];
+  var pay = document.getElementById('payNow');
+  pay.style.display = link ? 'inline-block' : 'none';
+  if (link) pay.href = link;
+  try { localStorage.setItem('omni_claim', JSON.stringify(state)); } catch (e) {}
+}
+rows.forEach(function (r) {
+  r.addEventListener('click', function () {
+    state.a = r.getAttribute('data-a'); state.nm = r.getAttribute('data-nm'); state.pr = r.getAttribute('data-pr');
+    paint();
+  });
+});
+document.querySelectorAll('.chips').forEach(function (g) {
+  var seat = g.getAttribute('data-seat');
+  g.querySelectorAll('.chip').forEach(function (c) {
+    c.addEventListener('click', function () { state[seat] = c.getAttribute('data-v'); paint(); });
+  });
+});
+document.getElementById('send').addEventListener('click', function () {
+  if (!state.a) { document.getElementById('pick').scrollIntoView({ block: 'center' }); return; }
+  var v = function (id) { return (document.getElementById(id).value || '—').trim(); };
+  var body =
+    'Assembly: ' + state.nm + ' (' + state.pr + ')%0A' +
+    (state.a === 'III' ? 'Specialist seat: ' + state.specialist + '%0ANight seat: ' + state.night + '%0A' : '') +
+    'Business: ' + encodeURIComponent(v('fBiz')) + '%0A' +
+    'WhatsApp number: ' + encodeURIComponent(v('fPhone')) + '%0A' +
+    'Kind of business: ' + encodeURIComponent(v('fKind')) + '%0A' +
+    'Go-live: ' + encodeURIComponent(v('fWhen')) + '%0A' +
+    'Notes: ' + encodeURIComponent(v('fNotes'));
+  location.href = 'mailto:hello@omniagent.ai?subject=' + encodeURIComponent('Claim — ' + state.nm + (v('fBiz') !== '—' ? ' — ' + v('fBiz') : '')) + '&body=' + body;
+});
+paint();
+</script>
+
+</body>
+</html>

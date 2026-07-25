@@ -204,6 +204,11 @@ footer{padding:30px 0;font-family:var(--mono);font-size:11px;color:#6b6558;lette
         <a class="visit" href="https://github.com/greenaisolution/choreless/tree/claude/omniagent-project-completion-l8ijjg/assemblies" target="_blank" rel="noopener">assemblies/ <span>↗</span></a>
       </div>
       <div class="prop">
+        <div class="prop-head"><h3>Claim page</h3><span class="pill live"><span class="dot"></span>Live</span></div>
+        <p>The buy flow: pick an assembly, choose III's seats, request the invoice. Stripe-ready — paste Payment Links into <b style="color:var(--paper)">STRIPE_LINKS</b> at the top of claim.html's script and "Pay now" appears on its own.</p>
+        <a class="visit" href="https://greenaisolution.github.io/omniagent/claim.html" target="_blank" rel="noopener">/claim.html <span>↗</span></a>
+      </div>
+      <div class="prop">
         <div class="prop-head"><h3>Domain</h3><span class="pill pending"><span class="dot"></span>Not bought yet</span></div>
         <p>The site says <b style="color:var(--paper)">omniagent.ai</b> everywhere — CTAs, footer email, mailto links — but the real URL is still a github.io subdomain. Buy it before serious outreach.</p>
         <a class="visit" href="#week"><span></span>See this week's plan ↓</a>
@@ -265,6 +270,8 @@ footer{padding:30px 0;font-family:var(--mono);font-size:11px;color:#6b6558;lette
       <div class="punch-item"><span class="pill live"><span class="dot"></span>Done</span><div><b>The System application page</b><p>Live, with the real pricing floor as the headline.</p></div></div>
       <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Tenant isolation in the engine</b><p>The real technical unlock for hosting many customers on one instance — a tenant resolver + per-tenant vector filtering. See <span class="path" style="font-family:var(--mono)">docs/DEPLOYMENT.md</span>.</p></div></div>
       <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Domain + DNS</b><p>Everything already assumes omniagent.ai exists.</p></div></div>
+      <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Payment rails</b><p>Create a Stripe account, make three Payment Links (III/VII/XV), paste into claim.html's STRIPE_LINKS — "Pay now" lights up automatically. Until then: manual invoice.</p></div></div>
+      <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Stand up the engine</b><p>infra/SETUP.md — Path A (n8n Cloud, ~1 hour) for the demo rig and first customers; Path B (docker-compose in infra/) when margins matter.</p></div></div>
       <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Voice / RCS / Checkout</b><p>Drafted, structurally valid, not customer-facing until tenant isolation exists underneath them too.</p></div></div>
     </div>
   </div>
@@ -283,6 +290,8 @@ footer{padding:30px 0;font-family:var(--mono);font-size:11px;color:#6b6558;lette
       <div class="docrow"><b>The System — internal spec</b><span class="desc">Real pricing floor, capacity math, application rules</span><span class="path">docs/THE-SYSTEM.md</span></div>
       <div class="docrow"><b>Valuation</b><span class="desc">The $300k design — how the tiers add up</span><span class="path">docs/VALUATION.md</span></div>
       <div class="docrow"><b>Sales one-pager</b><span class="desc">Print/PDF-ready pitch</span><span class="path">docs/SALES-ONEPAGER.md</span></div>
+      <div class="docrow"><b>Service agreement</b><span class="desc">Per-assembly contract template — lawyer review before first signature</span><span class="path">docs/SERVICE-AGREEMENT.md</span></div>
+      <div class="docrow"><b>Engine setup</b><span class="desc">Zero → running: n8n Cloud path + self-hosted docker-compose</span><span class="path">infra/SETUP.md</span></div>
       <div class="docrow"><b>Engine README</b><span class="desc">Every workflow, setup steps, what's next</span><span class="path">omniagent-engine/README.md</span></div>
     </div>
   </div>
