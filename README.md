@@ -64,9 +64,10 @@ python3 -m http.server 4600   # then open http://localhost:4600
   and cited inline; if it's not in the knowledge base, the agent says so and escalates.
 - **Human-gated actions** — anything irreversible is held behind a typed `CONFIRM`
   protocol baked into the agent's system prompt.
-- **Their data, their tenancy** — runs on the customer's own n8n, OpenAI key and MongoDB
-  Atlas cluster. No middleman, no training on their conversations.
-- **Live in a weekend** — one importable workflow, ~20 minutes of credential wiring.
+- **Hosted, isolated, never trained on** — we run the infrastructure; every customer's
+  knowledge base and conversation history is walled off to them alone.
+- **Live in 48 hours** — we connect the number and load the knowledge. Nothing for the
+  customer to install or run.
 
 See [`docs/SALES-ONEPAGER.md`](docs/SALES-ONEPAGER.md) for the pitch and
 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the go-live runbook.

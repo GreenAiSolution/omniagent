@@ -49,7 +49,7 @@ Same brain, different job — a new agent is a config change, not a rebuild.
 
 - **Grounded** — every factual answer is retrieved and cited; unknowns escalate instead of hallucinate.
 - **Gated** — write actions require a human `CONFIRM`, enforced in the agent's system prompt.
-- **Yours** — runs on your own n8n, your OpenAI key, your MongoDB. Nothing trains on your data; delete it and it's gone.
+- **Isolated** — fully hosted, nothing for you to run. Your knowledge base and conversations are walled off to your business alone; nothing trains on them; cancel and it's deleted.
 - **Tunable** — turn write tools off for a read-only bot, tighten approvals, or cap costs by switching models. All configuration.
 
 ## What it's worth

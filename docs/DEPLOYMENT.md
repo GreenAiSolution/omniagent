@@ -1,76 +1,80 @@
 # Omniagent — Deployment Runbook
 
-How to take a customer from "interested" to a live agent. Budget ~20 minutes of
-credential wiring per agent; the pipeline itself is already built.
+How to take a customer from "interested" to a live agent. Hosted model: **you run one
+shared engine; each customer just gets a WhatsApp number.**
 
 ## Architecture at a glance
 
 ```
-WhatsApp number ─▶ n8n (Omniagent engine) ─▶ OpenAI (chat/voice/vision/embeddings)
-                        │                        │
-                        │                  MongoDB Atlas (your knowledge, vector search)
-                        │
-                        └─▶ Tools: booking / QuickBooks / ticket / CRM webhooks
-                                    (money-moving actions gated by a typed CONFIRM)
+Customer's WhatsApp number ─▶ Omniagent (hosted, one n8n) ─▶ OpenAI (chat/voice/vision/embeddings)
+        (yours, per tenant)          │                              │
+                                      │                        MongoDB Atlas
+                                      │                  (shared cluster, isolated per tenant)
+                                      └─▶ Tools: booking / QuickBooks / ticket / CRM webhooks
+                                                  (money-moving actions gated by a typed CONFIRM)
 ```
 
-Everything runs in **the customer's own tenancy** — their n8n, their OpenAI key,
-their MongoDB cluster. Omniagent is the workflow + the knowledge, not a middleman.
+Everything runs on **your infrastructure** — your n8n, your OpenAI account, your
+MongoDB cluster. The customer never sees any of it and never creates an account
+anywhere; they get a working WhatsApp number. Their knowledge base and conversation
+history are isolated to them alone inside your shared systems.
 
-## Prerequisites (the customer provides)
+## Prerequisites (you provide, once — not per customer)
 
 1. **n8n** instance — Cloud or self-hosted, v1.60+ (the AI Agent v2 and MongoDB Atlas
-   Vector Store nodes need a recent build).
-2. **OpenAI** API key.
-3. **MongoDB Atlas** cluster (M0 free tier works) with Vector Search enabled.
-4. **Meta / WhatsApp Cloud API** app with a Business number.
+   Vector Store nodes need a recent build). One instance serves every customer.
+2. **OpenAI** API key, on your billing.
+3. **MongoDB Atlas** cluster, on your billing, with Vector Search enabled — one cluster,
+   one `knowledge_base` collection, documents tagged per tenant (see Tenant isolation
+   below).
+4. A **Meta / WhatsApp Cloud API** business account you control, capable of provisioning
+   a new phone number per customer (a WhatsApp Business Platform account supports many
+   numbers under one business).
 
-## Go-live steps
+## Tenant isolation — the piece that makes this actually multi-tenant
 
-1. **Import the agent.** In n8n → *Workflows → Import from File*, pick the workflow for
-   the agent you're deploying from [`omniagent-engine/`](../omniagent-engine):
-   - `workflow.json` — Concierge (base)
-   - `workflow-customer-support.json` — Support
-   - `workflow-quickbooks-specialist.json` — Bookkeeper
-   - `workflow-reservations.json` — Reservations
-   - `workflow-sales-qualifier.json` — Sales Qualifier
-   Also import `ingest-knowledge-base.json` (used to load the knowledge base).
+**Status: not yet built.** The current `omniagent-engine/workflow-*.json` files were
+built for one-tenant-per-instance (the BYO-infra model). Running many customers on one
+shared n8n instance needs one real addition before the first paying customer goes live
+on it:
 
-2. **Create credentials** (once): OpenAI, MongoDB Atlas, WhatsApp API, WhatsApp Trigger,
-   and a generic **Header Auth** named e.g. `WhatsApp Media Bearer`
-   (`Authorization = Bearer <permanent token>`) for the media-download nodes. Assign
-   them to any node showing a red credential badge.
+- A **tenant resolver** step early in each workflow: given the inbound WhatsApp
+  `phone_number_id`, look up which customer that number belongs to (a small config
+  table — a Google Sheet or Airtable base is enough to start) and pull their business
+  name, system-prompt overrides, and a `tenantId`.
+- Every knowledge-base write (ingestion) and read (`MongoDB Vector Search`) tagged and
+  filtered by that `tenantId` in `metadata`, so one customer's documents never surface
+  in another's answers.
+- Every tool webhook (booking, QuickBooks, ticket, CRM) parameterized per tenant instead
+  of hardcoded per workflow file.
 
-3. **Set up Vector Search.** Create a database (e.g. `omniagent`) and a `knowledge_base`
-   collection, then a Vector Search index named `vector_index`
-   (`numDimensions: 3072` for `text-embedding-3-large`). Full JSON is in the engine README.
+Until this ships, treat each early customer as its own workflow copy in the same n8n
+instance (duplicate the workflow, hardcode their `tenantId` in the Mongo filter) — safe,
+just not the scalable end state. Build the real resolver once you're past a handful of
+customers.
 
-4. **Seed the knowledge base.** Open `ingest-knowledge-base.json`, open the Upload Form
-   trigger, and upload the customer's PDFs / docs / price lists / policies. Each file is
-   chunked, embedded and stored with a `source` for citations.
+## Go-live steps (per customer, once tenant isolation exists)
 
-5. **Wire the agent's tools** (Growth+ agents):
-   - **Bookkeeper** — QuickBooks OAuth2 credential + replace `YOUR_REALM_ID` in the tool URLs.
-   - **Reservations** — point `YOUR_AVAILABILITY_WEBHOOK_URL` and `YOUR_BOOKING_WEBHOOK_URL`
-     at the booking system (or an n8n webhook that reads/writes it).
-   - **Support** — set `YOUR_TICKET_WEBHOOK_URL` to Zendesk/Freshdesk/HubSpot/Slack/Sheets.
-   - **Sales Qualifier** — set `YOUR_CRM_WEBHOOK_URL` and `YOUR_SCHEDULING_WEBHOOK_URL`.
-   - Replace **`YOUR BUSINESS`** in the agent's system message with the company name.
-
-6. **Connect WhatsApp.** Copy the Production webhook URL from the WhatsApp Trigger into
-   Meta → WhatsApp → Configuration (Callback URL + Verify Token), subscribe to `messages`,
-   add a test recipient, then **Activate** the workflow.
-
-7. **Smoke test.** Message the number: a text question (expect a cited answer), a voice
-   note, a photo, a PDF, a follow-up ("and the second one?"), and — for tool agents — a
-   write request (expect a `CONFIRM` prompt before anything happens).
+1. **Provision the number.** Add a new phone number to your WhatsApp Business Platform
+   account for this customer.
+2. **Register the tenant.** Add a row to the tenant config with their `phone_number_id`,
+   business name, and any system-prompt overrides.
+3. **Seed their knowledge base.** Run `ingest-knowledge-base.json` against their PDFs /
+   docs / price lists / policies, tagged with their `tenantId`.
+4. **Wire their tools** (Growth+ agents) — point the relevant tool node's webhook at
+   their actual booking system / QuickBooks realm / ticket system / CRM, keyed by
+   `tenantId` so it only ever touches their systems.
+5. **Smoke test on their number.** A text question (expect a cited answer), a voice
+   note, a photo, a follow-up, and — for tool agents — a write request (expect a
+   `CONFIRM` prompt before anything happens).
 
 ## Safety checklist before handing over
 
 - [ ] Knowledge base seeded; a known question returns the right answer **with a citation**.
 - [ ] An out-of-scope question is **declined / escalated**, not hallucinated.
 - [ ] Every write tool prompts for `CONFIRM` and only acts after the user types it.
-- [ ] To disable actions entirely, delete the tool nodes — reads still work.
+- [ ] Vector search results checked against another tenant's documents — confirm zero
+      cross-tenant leakage before this customer goes live.
 - [ ] Cost guardrails set (model tier, `contextWindowLength`, `topK`) if needed.
 
 ## Regenerating / adding agents

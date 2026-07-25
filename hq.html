@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Omniagent — Command Center</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f2eee3; --ink:#171512; --ink-soft:#4c463c;
+  --forest:#0e2f22; --forest-2:#0a241a; --void:#0a0908;
+  --lime:#c6f36b; --lime-dim:#a8d94e;
+  --gold:#d9b96a; --gold-dim:#a3854f;
+  --bad:#e0836b;
+  --line:rgba(242,238,227,.12); --line-2:rgba(242,238,227,.06);
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--paper);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--lime);color:var(--ink)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;text-wrap:balance}
+em{font-style:italic}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+body:after{content:"";position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:999;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 8s steps(8) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,2%)}40%{transform:translate(2%,-1%)}60%{transform:translate(-1%,-2%)}80%{transform:translate(1%,1%)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- top ---- */
+header.top{position:sticky;top:0;z-index:50;background:rgba(10,9,8,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+.brand{font-family:var(--serif);font-size:18px;display:flex;align-items:center;gap:9px}
+.brand .sq{width:10px;height:10px;background:var(--lime);position:relative;flex:none}
+.brand .sq:after{content:"";position:absolute;inset:2px;background:var(--void)}
+.brand small{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#6b6558;margin-left:4px}
+.status-pill{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a39d90}
+.status-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(198,243,107,.15);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ---- hero ---- */
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--line);position:relative}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(55% 70% at 80% 0%,rgba(198,243,107,.06),transparent 60%);pointer-events:none}
+.hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime)}
+.hero h1{font-size:clamp(30px,4.4vw,46px);margin:16px 0 14px;position:relative}
+.hero p{color:#a39d90;max-width:60ch;font-size:15.5px;line-height:1.7;position:relative}
+.hero p b{color:var(--paper);font-weight:500}
+.readout{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:30px;position:relative}
+.readout div{flex:1;background:var(--void);padding:16px 20px;display:flex;flex-direction:column;gap:6px}
+.readout .l{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6b6558}
+.readout .v{font-family:var(--serif);font-size:22px;color:var(--paper)}
+.readout .v.lime{color:var(--lime)}
+.readout .v.gold{color:var(--gold)}
+@media(max-width:760px){.readout{flex-direction:column}}
+
+/* ---- section shell ---- */
+.sec{padding:52px 0;border-bottom:1px solid var(--line)}
+.sec-head{max-width:70ch;margin-bottom:30px}
+.sec-head .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.sec-head h2{font-size:clamp(22px,3vw,30px);margin-top:10px}
+.sec-head p{color:#a39d90;margin-top:10px;font-size:14.5px;max-width:64ch}
+
+/* ---- model card ---- */
+.model{border:1px solid var(--line);background:linear-gradient(160deg,rgba(198,243,107,.04),transparent 60%)}
+.model-flow{display:flex;align-items:center;flex-wrap:wrap;gap:0;padding:28px;font-family:var(--mono);font-size:12.5px}
+.model-flow .node{background:var(--forest-2);border:1px solid var(--line);padding:10px 16px;color:var(--paper)}
+.model-flow .node.you{border-color:rgba(198,243,107,.4);color:var(--lime)}
+.model-flow .arrow{color:#6b6558;padding:0 10px}
+.model-note{padding:0 28px 28px;color:#a39d90;font-size:14px;max-width:70ch;line-height:1.7}
+.model-note b{color:var(--paper)}
+
+/* ---- property cards ---- */
+.props{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.prop{background:var(--void);border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:12px;transition:background .15s}
+.prop:hover{background:rgba(242,238,227,.02)}
+.prop-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.prop h3{font-size:18px;color:var(--paper)}
+.pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;white-space:nowrap;border:1px solid transparent;display:flex;align-items:center;gap:5px}
+.pill .dot{width:5px;height:5px;border-radius:50%}
+.pill.live{background:rgba(198,243,107,.1);border-color:rgba(198,243,107,.3);color:var(--lime)}
+.pill.live .dot{background:var(--lime)}
+.pill.pending{background:rgba(217,185,106,.1);border-color:rgba(217,185,106,.3);color:var(--gold)}
+.pill.pending .dot{background:var(--gold)}
+.pill.next{background:rgba(242,238,227,.05);border-color:var(--line);color:#8a8478}
+.pill.next .dot{background:#8a8478}
+.prop p{font-size:13.5px;color:#a39d90;line-height:1.6;flex:1}
+.prop a.visit{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--paper);border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between}
+.prop a.visit:hover{color:var(--lime)}
+.prop.sub-list ul{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.prop.sub-list a{color:#a39d90;border-bottom:1px solid transparent}
+.prop.sub-list a:hover{color:var(--lime);border-color:var(--lime)}
+
+/* ---- checklist ---- */
+.checklist{display:flex;flex-direction:column;border:1px solid var(--line)}
+.check-row{display:flex;align-items:flex-start;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);cursor:pointer}
+.check-row:last-child{border-bottom:0}
+.check-row:hover{background:rgba(242,238,227,.02)}
+.check-box{width:20px;height:20px;border:1.5px solid #6b6558;flex:none;margin-top:2px;position:relative;transition:.15s}
+.check-row.done .check-box{background:var(--lime);border-color:var(--lime)}
+.check-row.done .check-box:after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border-right:2px solid var(--void);border-bottom:2px solid var(--void);transform:rotate(45deg)}
+.check-body b{display:block;font-size:15px;color:var(--paper);margin-bottom:4px}
+.check-row.done .check-body b{color:#6b6558;text-decoration:line-through}
+.check-body p{font-size:13.5px;color:#a39d90;line-height:1.6}
+.check-body .quote{display:block;margin-top:8px;padding:10px 14px;background:var(--forest-2);border-left:2px solid var(--lime);font-family:var(--mono);font-size:12px;color:#c7d3c3;line-height:1.6}
+
+/* ---- punch list ---- */
+.punch{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.punch-item{background:var(--void);padding:20px 22px;display:flex;gap:14px;align-items:flex-start}
+.punch-item .pill{margin-top:2px}
+.punch-item div b{display:block;font-size:14.5px;color:var(--paper);margin-bottom:4px}
+.punch-item div p{font-size:13px;color:#a39d90;line-height:1.55}
+
+/* ---- doc links ---- */
+.doclinks{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.docrow{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.docrow .path{font-family:var(--mono);font-size:12px;color:#6b6558}
+.docrow b{color:var(--paper);font-weight:500}
+.docrow span.desc{color:#a39d90;font-size:13px}
+
+footer{padding:30px 0;font-family:var(--mono);font-size:11px;color:#6b6558;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap top-in">
+  <span class="brand"><span class="sq"></span>Omniagent<small>HQ</small></span>
+  <span class="status-pill"><span class="dot"></span>Hosted · Multi-tenant</span>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">Internal — operator view, not for customers</span>
+  <h1>Everything you've built, <em>in one place.</em></h1>
+  <p>You made the call: <b>fully hosted</b>. You run one shared engine; customers just get a working WhatsApp number, nothing to install, nothing to manage. This page is the map — what's live, what's next, and the one thing to do this week.</p>
+  <div class="readout">
+    <div><span class="l">Operating model</span><span class="v lime">Hosted</span></div>
+    <div><span class="l">Live properties</span><span class="v">3</span></div>
+    <div><span class="l">Engine workflows</span><span class="v">8</span></div>
+    <div><span class="l">Tenant isolation</span><span class="v gold">Not built</span></div>
+  </div>
+</div></section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The model, confirmed</span>
+      <h2>One engine. Every tenant. No middleman for you to build.</h2>
+      <p>Customers never touch infrastructure — not n8n, not OpenAI, not a database. You own all of it, on your billing, and every tenant's data is walled off inside it.</p>
+    </div>
+    <div class="model">
+      <div class="model-flow">
+        <span class="node">Customer's WhatsApp number</span><span class="arrow">→</span>
+        <span class="node you">Your hosted engine (n8n)</span><span class="arrow">→</span>
+        <span class="node">OpenAI</span><span class="arrow">+</span>
+        <span class="node">MongoDB Atlas (isolated per tenant)</span>
+      </div>
+      <p class="model-note"><b>What changed:</b> the original design ran on each customer's own n8n/OpenAI/MongoDB — great for a "your data never leaves your hands" pitch, hard to sell to a small-business owner who doesn't want three new accounts. Now it's the opposite: <b>you</b> host it, <b>you</b> pay OpenAI and MongoDB directly, and the pitch becomes "nothing for you to run" instead of "here's three accounts to set up." The trust story shifts from tenancy to isolation — see the site's Trust section, already updated.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Live right now</span>
+      <h2>Every deployed property.</h2>
+    </div>
+    <div class="props">
+      <div class="prop">
+        <div class="prop-head"><h3>Main site</h3><span class="pill live"><span class="dot"></span>Live</span></div>
+        <p>The storefront — agents, night shift, pricing, live sandbox demo, Trust &amp; security.</p>
+        <a class="visit" href="https://greenaisolution.github.io/omniagent/" target="_blank" rel="noopener">greenaisolution.github.io/omniagent <span>↗</span></a>
+      </div>
+      <div class="prop">
+        <div class="prop-head"><h3>The System</h3><span class="pill live"><span class="dot"></span>Live</span></div>
+        <p>Flagship application page — the manifest, the real pricing floor, the six-question apply flow.</p>
+        <a class="visit" href="https://greenaisolution.github.io/omniagent-system/" target="_blank" rel="noopener">greenaisolution.github.io/omniagent-system <span>↗</span></a>
+      </div>
+      <div class="prop sub-list">
+        <div class="prop-head"><h3>SEO landing pages</h3><span class="pill live"><span class="dot"></span>Live · 5</span></div>
+        <ul>
+          <li><a href="https://greenaisolution.github.io/omniagent/for/restaurants.html" target="_blank" rel="noopener">Restaurants &amp; salons ↗</a></li>
+          <li><a href="https://greenaisolution.github.io/omniagent/for/ecommerce.html" target="_blank" rel="noopener">E-commerce &amp; retail ↗</a></li>
+          <li><a href="https://greenaisolution.github.io/omniagent/for/trades.html" target="_blank" rel="noopener">Trades &amp; agencies ↗</a></li>
+          <li><a href="https://greenaisolution.github.io/omniagent/for/clinics.html" target="_blank" rel="noopener">Clinics &amp; services ↗</a></li>
+          <li><a href="https://greenaisolution.github.io/omniagent/for/b2b.html" target="_blank" rel="noopener">B2B &amp; SaaS ↗</a></li>
+        </ul>
+      </div>
+      <div class="prop">
+        <div class="prop-head"><h3>Engine workflows</h3><span class="pill live"><span class="dot"></span>8 files</span></div>
+        <p>5 agents + 3 night-shift automations, importable into n8n today. Voice, RCS and Checkout are drafted but need tenant isolation before they serve real customers.</p>
+        <a class="visit" href="https://github.com/greenaisolution/choreless/tree/claude/omniagent-project-completion-l8ijjg/omniagent-engine" target="_blank" rel="noopener">omniagent-engine/ <span>↗</span></a>
+      </div>
+      <div class="prop">
+        <div class="prop-head"><h3>Domain</h3><span class="pill pending"><span class="dot"></span>Not bought yet</span></div>
+        <p>The site says <b style="color:var(--paper)">omniagent.ai</b> everywhere — CTAs, footer email, mailto links — but the real URL is still a github.io subdomain. Buy it before serious outreach.</p>
+        <a class="visit" href="#week"><span></span>See this week's plan ↓</a>
+      </div>
+      <div class="prop">
+        <div class="prop-head"><h3>Live demo instance</h3><span class="pill pending"><span class="dot"></span>Not running</span></div>
+        <p>One real n8n instance, one real WhatsApp number, under your control — the actual thing you demo live in the 20-minute pitch.</p>
+        <a class="visit" href="#week"><span></span>See this week's plan ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="week">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">This week</span>
+      <h2>The only checklist that matters right now.</h2>
+      <p>Pulled straight from <span class="path" style="font-family:var(--mono)">docs/SALES-PLAYBOOK.md</span>. Check items off as you go — it's saved in this browser.</p>
+    </div>
+    <div class="checklist" id="checklist">
+      <div class="check-row" data-id="domain">
+        <span class="check-box"></span>
+        <div class="check-body"><b>Buy the domain, point it at GitHub Pages</b><p>15 minutes. omniagent.ai (or your pick) — add a <code>CNAME</code> file to the repo and the DNS record. Every piece of copy already assumes it exists.</p></div>
+      </div>
+      <div class="check-row" data-id="demo-instance">
+        <span class="check-box"></span>
+        <div class="check-body"><b>Stand up your one demo instance</b><p>n8n Cloud + OpenAI key + MongoDB Atlas free tier + one real WhatsApp Business number. Import Concierge and one specialist. This is the thing you actually demo live.</p></div>
+      </div>
+      <div class="check-row" data-id="seed-kb">
+        <span class="check-box"></span>
+        <div class="check-body"><b>Load real documents into it</b><p>Your own business's docs, or a realistic demo business's menu/price list/policies — something a prospect can ask a real question against.</p></div>
+      </div>
+      <div class="check-row" data-id="list">
+        <span class="check-box"></span>
+        <div class="check-body"><b>Build a list of 15–20 targets</b><p>Restaurants and salons first — booking-heavy, WhatsApp-native, real money lost after hours. That's the fastest yes per the playbook's ICP order.</p></div>
+      </div>
+      <div class="check-row" data-id="outreach">
+        <span class="check-box"></span>
+        <div class="check-body"><b>Send the opener, from your own Omniagent number</b><p>The demo IS the channel.<span class="quote">"Quick question — who answers your WhatsApp at 11pm? Ours answered this message. I put AI staff on business WhatsApp numbers: bookings taken, quotes chased, reviews grown. 20-min demo on your own menu/pricelist — worth a look?"</span></p></div>
+      </div>
+      <div class="check-row" data-id="run-demos">
+        <span class="check-box"></span>
+        <div class="check-body"><b>Run the 20-minute demo script</b><p>Their 3 hardest questions live → the night shift sample → the ROI ledger with their numbers → land on Growth, or introduce The System if they push for hands-off.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Engineering — what's actually left</span>
+      <h2>Honest state of the build.</h2>
+    </div>
+    <div class="punch">
+      <div class="punch-item"><span class="pill live"><span class="dot"></span>Done</span><div><b>Full agent catalog</b><p>5 agents + 3 night-shift automations, importable, verified structurally sound.</p></div></div>
+      <div class="punch-item"><span class="pill live"><span class="dot"></span>Done</span><div><b>Marketing site + SEO pages</b><p>Live, verified, zero overflow/errors across viewports.</p></div></div>
+      <div class="punch-item"><span class="pill live"><span class="dot"></span>Done</span><div><b>The System application page</b><p>Live, with the real pricing floor as the headline.</p></div></div>
+      <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Tenant isolation in the engine</b><p>The real technical unlock for hosting many customers on one instance — a tenant resolver + per-tenant vector filtering. See <span class="path" style="font-family:var(--mono)">docs/DEPLOYMENT.md</span>.</p></div></div>
+      <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Domain + DNS</b><p>Everything already assumes omniagent.ai exists.</p></div></div>
+      <div class="punch-item"><span class="pill next"><span class="dot"></span>Next</span><div><b>Voice / RCS / Checkout</b><p>Drafted, structurally valid, not customer-facing until tenant isolation exists underneath them too.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Reference</span>
+      <h2>Every internal doc, in one list.</h2>
+    </div>
+    <div class="doclinks">
+      <div class="docrow"><b>Sales playbook</b><span class="desc">ICP, opener scripts, objections, pipeline math</span><span class="path">docs/SALES-PLAYBOOK.md</span></div>
+      <div class="docrow"><b>Deployment runbook</b><span class="desc">Hosted architecture, tenant isolation, go-live steps</span><span class="path">docs/DEPLOYMENT.md</span></div>
+      <div class="docrow"><b>Operations manual</b><span class="desc">Running the business day to day</span><span class="path">docs/OPERATIONS.md</span></div>
+      <div class="docrow"><b>The System — internal spec</b><span class="desc">Real pricing floor, capacity math, application rules</span><span class="path">docs/THE-SYSTEM.md</span></div>
+      <div class="docrow"><b>Valuation</b><span class="desc">The $300k design — how the tiers add up</span><span class="path">docs/VALUATION.md</span></div>
+      <div class="docrow"><b>Sales one-pager</b><span class="desc">Print/PDF-ready pitch</span><span class="path">docs/SALES-ONEPAGER.md</span></div>
+      <div class="docrow"><b>Engine README</b><span class="desc">Every workflow, setup steps, what's next</span><span class="path">omniagent-engine/README.md</span></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">Not linked from the public site. Not indexed. Yours only.</div></footer>
+
+<script>
+(function(){
+  var KEY = 'omni_hq_checklist';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
+  document.querySelectorAll('.check-row').forEach(function(row){
+    var id = row.getAttribute('data-id');
+    if (state[id]) row.classList.add('done');
+    row.addEventListener('click', function(){
+      row.classList.toggle('done');
+      state[id] = row.classList.contains('done');
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
