@@ -260,6 +260,39 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 .comp-tbl tr.self td:last-child{color:var(--forest);font-weight:600}
 .comp-src{font-size:11.5px;color:var(--ink-soft);margin-top:12px;font-family:var(--mono)}
 
+/* ---------- assemblies ---------- */
+.asm{border-top:1px solid var(--rule)}
+.asm-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:30px;align-items:center;padding:36px 28px;border-bottom:1px solid var(--hair);transition:background .2s}
+.asm-row.mid{background:var(--forest);color:#dfe8dd;border-bottom:1px solid rgba(242,238,227,.14)}
+.asm-row.max{background:#0b0a08;color:var(--paper);border-bottom:1px solid #0b0a08}
+.asm-num{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(44px,5vw,64px);line-height:1;letter-spacing:-.02em}
+.asm-row.mid .asm-num{color:var(--lime)}
+.asm-row.max .asm-num{color:var(--gold)}
+.asm-body .nm{font-family:var(--serif);font-size:23px;letter-spacing:-.01em}
+.asm-body .nm em{font-style:italic;font-weight:300}
+.asm-body .for{font-size:14px;color:var(--ink-soft);margin-top:6px;max-width:60ch}
+.asm-row.mid .asm-body .for{color:#b9c9b6}
+.asm-row.max .asm-body .for{color:#a39d90}
+.asm-roster{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px}
+.asm-roster span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--hair);color:var(--ink-soft);white-space:nowrap}
+.asm-row.mid .asm-roster span{border-color:rgba(198,243,107,.25);color:#cfdccb}
+.asm-row.max .asm-roster span{border-color:rgba(217,185,106,.3);color:#c9baa0}
+.asm-roster span.ch{border-style:dashed}
+.asm-price{text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.asm-price .amt{font-family:var(--serif);font-size:34px;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.asm-price .amt small{font-family:var(--mono);font-size:11px;letter-spacing:0}
+.asm-row.mid .asm-price .amt{color:var(--lime)}
+.asm-row.max .asm-price .amt{color:var(--gold)}
+.asm-price .bf{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.04em}
+.asm-row.mid .asm-price .bf{color:#8fa38c}
+.asm-row.max .asm-price .bf{color:#8a8478}
+.asm-foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:26px 28px;border-bottom:1px solid var(--rule);background:var(--paper-2)}
+.asm-foot p{font-size:13.5px;color:var(--ink-soft);max-width:62ch}
+.asm-foot p b{color:var(--ink);font-weight:600}
+.asm-foot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:15px 26px;white-space:nowrap;transition:.15s}
+.asm-foot a:hover{background:var(--forest);color:var(--lime)}
+@media(max-width:860px){.asm-row{grid-template-columns:1fr;gap:16px;padding:30px 22px}.asm-price{align-items:flex-start;text-align:left}}
+
 /* ---------- THE SYSTEM ---------- */
 .system{background:#0b0a08;color:var(--paper);border-bottom:1px solid #0b0a08;position:relative;overflow:hidden}
 .system:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 75% 30%,rgba(217,185,106,.07),transparent 60%),radial-gradient(50% 70% at 15% 85%,rgba(198,243,107,.05),transparent 60%)}
@@ -801,7 +834,7 @@ footer a:hover{color:var(--paper)}
         <a class="p-cta" href="#final">Talk to us</a>
       </div>
     </div>
-    <p class="price-foot"><b>Onboarding — $900, once.</b> We connect the number, load your knowledge, wire the tools, and hand you a live agent — fully hosted, nothing for you to set up. For the tier above all of this, see <b>The System</b> below.</p>
+    <p class="price-foot"><b>Onboarding — $900, once.</b> We connect the number, load your knowledge, wire the tools, and hand you a live agent — fully hosted, nothing for you to set up. Want the whole crew instead of a plan? See <b>the assemblies</b> just below — and above everything, <b>The System</b>.</p>
     <div class="comp-wrap">
       <h3>How that compares.</h3>
       <p class="comp-lede">Most of this category bills you per resolved conversation. That number moves with your volume — yours doesn't.</p>
@@ -818,6 +851,51 @@ footer a:hover{color:var(--paper)}
         </table>
       </div>
       <p class="comp-src">Public pricing as published by each vendor, 2026. Confirm current rates directly with them before comparing.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="assemblies">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">07.3 / The assemblies</span>
+      <h2>Three crews. Sized by<br /><em>how hard your phone rings.</em></h2>
+      <p class="aside">These are the packages we actually deploy — pre-designed teams of bots that go live on your number as one system, already wired to work together. Pick by how busy you are. We assemble the rest.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="asm reveal">
+      <div class="asm-row">
+        <div class="asm-num">III</div>
+        <div class="asm-body">
+          <div class="nm">Assembly of Three — <em>the counter, covered.</em></div>
+          <p class="for">For the single-location business. Every message answered, every booking held behind CONFIRM, every visit followed by the one question that grows your rating.</p>
+          <div class="asm-roster"><span>Concierge</span><span>Reservations · or the specialist you need</span><span>Reputation Loop</span></div>
+        </div>
+        <div class="asm-price"><span class="amt">$399<small> /mo</small></span><span class="bf">+ $900 assembly, once</span></div>
+      </div>
+      <div class="asm-row mid">
+        <div class="asm-num">VII</div>
+        <div class="asm-body">
+          <div class="nm">Assembly of Seven — <em>the whole floor, day and night.</em></div>
+          <p class="for">For the business already slammed. Four agents cover the front — support, bookings, sales, everything else — while the full night shift audits the day, chases silent money, and grows the rating on a clock.</p>
+          <div class="asm-roster"><span>Concierge</span><span>Support</span><span>Reservations</span><span>Sales Qualifier</span><span>Night Auditor</span><span>The Chaser</span><span>Reputation Loop</span></div>
+        </div>
+        <div class="asm-price"><span class="amt">$899<small> /mo</small></span><span class="bf">+ $1,800 assembly, once</span></div>
+      </div>
+      <div class="asm-row max">
+        <div class="asm-num">XV</div>
+        <div class="asm-body">
+          <div class="nm">Assembly of Fifteen — <em>the machine.</em></div>
+          <p class="for">For the operation that never stops. Every agent, every night-shift automation — plus quotes drafted from your rate card, orders tracked from live carrier status, no-shows nudged the day before, lapsed customers won back, and three more channels when you connect them.</p>
+          <div class="asm-roster"><span>All seven above</span><span>Bookkeeper</span><span>Order Tracker</span><span>Quote Builder</span><span>The Reminder</span><span>The Winback</span><span class="ch">Voice — needs Twilio</span><span class="ch">RCS — needs a BSP</span><span class="ch">Checkout — needs Stripe</span></div>
+        </div>
+        <div class="asm-price"><span class="amt">$1,299<small> /mo</small></span><span class="bf">+ $3,500 assembly, once</span></div>
+      </div>
+      <div class="asm-foot">
+        <p><b>An assembly is not a download.</b> After onboarding, the crew goes live on your WhatsApp number as one running system — tuned, gated, monitored. You receive working staff, never files. Above all three sits <b>The System</b>, where a human desk runs it for you.</p>
+        <a href="#final">Claim an assembly</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1241,6 +1319,7 @@ var CMDK_ITEMS=[
   {t:'Controls — why it is allowed',t2:'trust',href:'#controls'},
   {t:'The math — ROI calculator',t2:'ledger',href:'#math'},
   {t:'Price list',t2:'plans',href:'#price'},
+  {t:'The assemblies — III · VII · XV',t2:'packages',href:'#assemblies'},
   {t:'Build your stack',t2:'builder',href:'#builder'},
   {t:'The System — application only',t2:'flagship',href:'#system'},
   {t:'Field notes',t2:'proof',href:'#notes'},
