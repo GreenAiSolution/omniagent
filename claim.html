@@ -230,6 +230,13 @@ var STRIPE_LINKS = { III: '', VII: '', XV: '' };
 
 var state = { a: null, nm: '', pr: '', specialist: 'Reservations', night: 'Reputation Loop' };
 try { var saved = JSON.parse(localStorage.getItem('omni_claim') || 'null'); if (saved && saved.a) state = saved; } catch (e) {}
+/* arriving from a tier page pre-selects that assembly: claim.html?a=III|VII|XV */
+(function () {
+  var want = new URLSearchParams(location.search).get('a');
+  if (!want) return;
+  var row = document.querySelector('.pick-row[data-a="' + want + '"]');
+  if (row) { state.a = want; state.nm = row.getAttribute('data-nm'); state.pr = row.getAttribute('data-pr'); }
+})();
 
 var rows = document.querySelectorAll('.pick-row');
 function paint() {

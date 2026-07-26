@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Assembly of Three — $399/mo | Omniagent</title>
+<meta name="description" content="The Assembly of Three — Omniagent's starter crew: a Concierge that answers everything, the specialist seat of your choice, and the Reputation Loop growing your rating nightly. $399/mo, live in 48 hours." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f2eee3; --paper-2:#eae5d6; --ink:#171512; --ink-soft:#4c463c;
+  --rule:#171512; --hair:rgba(23,21,18,.18);
+  --forest:#0e2f22; --forest-2:#0a241a; --lime:#c6f36b; --lime-dim:#a8d94e;
+  --gold:#d9b96a; --void:#0b0a08;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+nav.top{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--nav-rule)}
+.top-in{display:flex;align-items:stretch;justify-content:space-between;height:58px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em}
+.brand .sq{width:13px;height:13px;position:relative;flex:none}
+.brand .sq:after{content:"";position:absolute;inset:3px}
+.top-links{display:flex;align-items:stretch}
+.top-links a{display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--nav-hair);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;transition:.15s}
+.hero{position:relative;overflow:hidden;padding:74px 0 66px;border-bottom:1px solid var(--sec-rule)}
+.hero .big-rn{position:absolute;right:-30px;top:50%;transform:translateY(-50%);font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(220px,34vw,420px);line-height:1;opacity:.08;pointer-events:none;user-select:none}
+.hero .k{display:block;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.6vw,64px);line-height:1.04;letter-spacing:-.02em;max-width:14ch}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero p.lede{max-width:56ch;font-size:16.5px;line-height:1.7;margin-top:20px}
+.hero-price{display:flex;align-items:baseline;gap:16px;margin-top:26px;flex-wrap:wrap}
+.hero-price .amt{font-family:var(--serif);font-size:clamp(38px,4.4vw,54px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.hero-price .amt small{font-family:var(--mono);font-size:12px;letter-spacing:0}
+.hero-price .bf{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em}
+.hero-ctas{display:flex;margin-top:30px;border:1px solid var(--cta-border);width:fit-content;max-width:100%;position:relative}
+.hero-ctas a{padding:16px 28px;font-family:var(--mono);font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;transition:.15s;min-width:0}
+.sec{padding:56px 0;border-bottom:1px solid var(--sec-rule)}
+.sec .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;display:block;margin-bottom:12px}
+.sec h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em;line-height:1.08;margin-bottom:14px}
+.sec h2 em{font-style:italic;font-weight:300}
+.sec .aside{max-width:64ch;font-size:15px;margin-bottom:30px}
+.crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;border:1px solid var(--card-line);background:var(--card-line)}
+.cbot{padding:22px 24px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.cbot .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;width:fit-content;border:1px solid}
+.cbot h3{font-family:var(--serif);font-weight:400;font-size:20px;letter-spacing:-.01em}
+.cbot p{font-size:13.5px;line-height:1.6}
+.roster-note{margin-top:18px;font-family:var(--mono);font-size:12px;line-height:1.8;max-width:76ch}
+.clock{border-top:1px solid var(--card-line);max-width:820px}
+.crow{display:grid;grid-template-columns:110px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--card-line);align-items:baseline}
+.crow .tm{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em}
+.crow .ev{font-size:15px;line-height:1.6;max-width:62ch}
+.inc{display:grid;grid-template-columns:1fr 1fr;gap:12px 34px;max-width:820px}
+@media(max-width:680px){.inc{grid-template-columns:1fr}}
+.inc div{position:relative;padding-left:26px;font-size:14.5px;line-height:1.6}
+.inc div:before{content:"—";position:absolute;left:0}
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid var(--card-line);background:var(--card-line)}
+@media(max-width:720px){.fit{grid-template-columns:1fr}}
+.fit-col{padding:26px 26px}
+.fit-col .k{display:block;margin-bottom:16px}
+.fit-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fit-col li{position:relative;padding-left:22px;font-size:14px;line-height:1.55}
+.fit-col li:before{position:absolute;left:0;font-family:var(--mono)}
+.fit-col.yes li:before{content:"+"}
+.fit-col.no li:before{content:"\2192"}
+.hop{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 0 0}
+.hop a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid;padding-bottom:3px}
+.final{padding:72px 0;text-align:left}
+.final h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.4vw,52px);letter-spacing:-.02em;line-height:1.06;margin-bottom:14px}
+.final h2 em{font-style:italic;font-weight:300}
+.final p{max-width:54ch;font-size:15.5px;margin-bottom:30px}
+.final .go{display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:18px 34px;transition:.15s}
+footer{border-top:1px solid var(--card-line)}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:26px 0;font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+@media(max-width:860px){.hero .big-rn{opacity:.05}}
+
+body{background:var(--paper);color:var(--ink)}
+::selection{background:var(--lime);color:var(--ink)}
+nav.top{background:var(--paper);--nav-rule:var(--rule);--nav-hair:var(--hair)}
+.brand .sq{background:var(--ink)} .brand .sq:after{background:var(--lime)}
+.top-links a:hover{background:var(--paper-2)}
+.top-links a.cta{background:var(--ink);color:var(--paper)}
+.top-links a.cta:hover{background:var(--forest);color:var(--lime)}
+.hero{--sec-rule:var(--rule)} .hero .big-rn{color:var(--forest)}
+.hero .k{color:var(--ink-soft)} .hero p.lede{color:var(--ink-soft)}
+.hero-price .amt{color:var(--ink)} .hero-price .bf{color:var(--ink-soft)}
+.hero-ctas{--cta-border:var(--rule)}
+.hero-ctas a.primary{background:var(--ink);color:var(--paper)}
+.hero-ctas a.primary:hover{background:var(--forest);color:var(--lime)}
+.hero-ctas a.ghost{border-left:1px solid var(--rule)} .hero-ctas a.ghost:hover{background:var(--paper-2)}
+.sec{--sec-rule:var(--rule)} .sec .num{color:var(--ink-soft)} .sec .aside{color:var(--ink-soft)}
+.crew,.clock,.fit{--card-line:var(--hair)}
+.cbot{background:var(--paper)} .cbot p{color:var(--ink-soft)}
+.cbot .tag{border-color:var(--hair);color:var(--ink-soft)}
+.cbot .tag.Night{background:var(--forest);color:var(--lime);border-color:var(--forest)}
+.cbot .tag.Channel{border-style:dashed}
+.roster-note{color:var(--ink-soft)}
+.crow .tm{color:var(--forest)} .crow .ev{color:var(--ink-soft)}
+.inc div{color:var(--ink-soft)} .inc div:before{color:var(--ink)}
+.fit-col{background:var(--paper)} .fit-col li{color:var(--ink-soft)}
+.fit-col.yes li:before{color:var(--forest)} .fit-col.no li:before{color:var(--ink-soft)}
+.hop a{color:var(--ink);border-color:var(--ink)}
+.final{background:var(--ink);color:var(--paper)}
+.final h2 em{color:var(--lime)} .final p{color:#b6b0a4}
+.final .go{background:var(--lime);color:var(--ink)} .final .go:hover{background:var(--lime-dim)}
+footer{background:var(--ink);color:#8a8478;--card-line:transparent}
+.foot-in{border-top:1px solid rgba(242,238,227,.14)} footer a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="../index.html"><span class="sq"></span>Omniagent</a>
+    <div class="top-links">
+      <a href="../index.html#assemblies">All assemblies</a>
+      <a class="cta" href="../claim.html?a=III">Claim the III</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="big-rn" aria-hidden="true">III</span>
+  <div class="wrap">
+    <span class="k">Assembly III — deployed as one system, live in 48 hours</span>
+    <h1>Assembly of<br />Three. <em>The counter, covered.</em></h1>
+    <p class="lede">For the single-location business that keeps missing messages. Three bots, wired as one system: everything answered, the one job you lose money on handled, and your rating climbing while you sleep.</p>
+    <div class="hero-price">
+      <span class="amt">$399<small> /mo</small></span>
+      <span class="bf">+ $900 assembly, once · cancel any month, 30 days' notice</span>
+    </div>
+    <div class="hero-ctas">
+      <a class="primary" href="../claim.html?a=III">Claim this assembly</a>
+      <a class="ghost" href="../index.html#try">Try it live first</a>
+    </div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">01 / The crew</span>
+    <h2>3 seats. <em>Every one filled.</em></h2>
+    <div class="crew">
+      <div class="cbot"><span class="tag Day">Day shift</span><h3>Concierge</h3><p>The always-on first responder. Answers from your documents only, cites the source like a footnote, and hands off to a human the moment it doesn't know — it does not improvise.</p></div>
+      <div class="cbot"><span class="tag Day">Day shift</span><h3>Reservations Agent</h3><p>Checks real availability before promising anything, then books, moves or cancels — only after your customer types CONFIRM. No double-bookings, no phone tag.</p></div>
+      <div class="cbot"><span class="tag Night">Night shift</span><h3>Reputation Loop</h3><p>The day after every visit it asks one question: how was it? Happy customers get walked to your review link; unhappy ones get intercepted privately before they become a one-star.</p></div>
+    </div>
+    <p class="roster-note">Both non-Concierge seats are yours to choose at onboarding: the specialist seat can be Reservations, Support, Sales Qualifier or Order Tracker — the night seat can be the Reputation Loop, the Night Auditor or the Chaser. Pick whatever your business actually loses money on.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">02 / On the clock</span>
+    <h2>What a day actually<br /><em>looks like.</em></h2>
+    <div class="clock">
+      <div class="crow"><span class="tm">22:41</span><span class="ev">A party of four texts about Friday. The Concierge answers in seconds, from your menu — source cited.</span></div>
+      <div class="crow"><span class="tm">22:43</span><span class="ev">They ask for a table. Real availability checked; the booking holds the moment they reply CONFIRM.</span></div>
+      <div class="crow"><span class="tm">Next day</span><span class="ev">The Reputation Loop asks how it went. Happy → your review link. Unhappy → intercepted, privately, to you.</span></div>
+      <div class="crow"><span class="tm">Every day</span><span class="ev">That's the whole loop — answered, booked, rated. It just repeats.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">03 / Every month includes</span>
+    <h2>One bill. <em>Everything in it.</em></h2>
+    <div class="inc">
+      <div>Fully hosted — the number, the AI, the infrastructure. Nothing for you to run.</div>
+      <div>Up to 3,000 conversations a month — and a conversation with you before anything changes if you outgrow it.</div>
+      <div>Every answer grounded in your documents, source cited. Unknowns escalate, never improvise.</div>
+      <div>Anything irreversible waits for a typed CONFIRM. Money never moves on a guess.</div>
+      <div>Knowledge refreshes — send new menus, prices, policies any time.</div>
+      <div>Cancel with 30 days' notice. Your data deleted, not archived.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">04 / The honest fit</span>
+    <h2>Right for you — <em>or not yet.</em></h2>
+    <div class="fit">
+      <div class="fit-col yes"><span class="k">Take the III if</span><ul><li>One location, one WhatsApp number</li><li>Messages going unanswered after hours</li><li>A rating that's stuck because nobody asks for reviews</li><li>First time hiring anything like this</li></ul></div>
+      <div class="fit-col no"><span class="k">Look elsewhere if</span><ul><li>Multiple staff drowning in daytime volume — take the Seven</li><li>Quotes and invoices going silent — the Chaser lives in the Seven</li><li>You want everything handled — that's the Fifteen</li></ul></div>
+    </div>
+    <div class="hop">
+      <a href="../index.html#assemblies">&larr; Compare all three</a>
+      <a href="seven.html">Bigger: Assembly of Seven — $899/mo &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Claim the III.<br /><em>Live in 48 hours.</em></h2>
+    <p>Pick your seats on the claim page, send five fields, and your crew is answering by the day after tomorrow. Or bring your hardest customer question to a 20-minute demo first.</p>
+    <a class="go" href="../claim.html?a=III">Claim this assembly</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 OMNIAGENT</span>
+    <span>ANSWER EVERYTHING · INVENT NOTHING</span>
+    <a href="../index.html">BACK TO OMNIAGENT.AI</a>
+  </div>
+</footer>
+
+</body>
+</html>

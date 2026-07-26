@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Assembly of Seven — $899/mo | Omniagent</title>
+<meta name="description" content="The Assembly of Seven — four agents covering the day, three automations working the night: audits, invoice chasing, reputation. Omniagent's busy-floor crew. $899/mo, live in 48 hours." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f2eee3; --paper-2:#eae5d6; --ink:#171512; --ink-soft:#4c463c;
+  --rule:#171512; --hair:rgba(23,21,18,.18);
+  --forest:#0e2f22; --forest-2:#0a241a; --lime:#c6f36b; --lime-dim:#a8d94e;
+  --gold:#d9b96a; --void:#0b0a08;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+nav.top{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--nav-rule)}
+.top-in{display:flex;align-items:stretch;justify-content:space-between;height:58px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em}
+.brand .sq{width:13px;height:13px;position:relative;flex:none}
+.brand .sq:after{content:"";position:absolute;inset:3px}
+.top-links{display:flex;align-items:stretch}
+.top-links a{display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--nav-hair);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;transition:.15s}
+.hero{position:relative;overflow:hidden;padding:74px 0 66px;border-bottom:1px solid var(--sec-rule)}
+.hero .big-rn{position:absolute;right:-30px;top:50%;transform:translateY(-50%);font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(220px,34vw,420px);line-height:1;opacity:.08;pointer-events:none;user-select:none}
+.hero .k{display:block;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.6vw,64px);line-height:1.04;letter-spacing:-.02em;max-width:14ch}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero p.lede{max-width:56ch;font-size:16.5px;line-height:1.7;margin-top:20px}
+.hero-price{display:flex;align-items:baseline;gap:16px;margin-top:26px;flex-wrap:wrap}
+.hero-price .amt{font-family:var(--serif);font-size:clamp(38px,4.4vw,54px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.hero-price .amt small{font-family:var(--mono);font-size:12px;letter-spacing:0}
+.hero-price .bf{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em}
+.hero-ctas{display:flex;margin-top:30px;border:1px solid var(--cta-border);width:fit-content;max-width:100%;position:relative}
+.hero-ctas a{padding:16px 28px;font-family:var(--mono);font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;transition:.15s;min-width:0}
+.sec{padding:56px 0;border-bottom:1px solid var(--sec-rule)}
+.sec .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;display:block;margin-bottom:12px}
+.sec h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em;line-height:1.08;margin-bottom:14px}
+.sec h2 em{font-style:italic;font-weight:300}
+.sec .aside{max-width:64ch;font-size:15px;margin-bottom:30px}
+.crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;border:1px solid var(--card-line);background:var(--card-line)}
+.cbot{padding:22px 24px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.cbot .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;width:fit-content;border:1px solid}
+.cbot h3{font-family:var(--serif);font-weight:400;font-size:20px;letter-spacing:-.01em}
+.cbot p{font-size:13.5px;line-height:1.6}
+.roster-note{margin-top:18px;font-family:var(--mono);font-size:12px;line-height:1.8;max-width:76ch}
+.clock{border-top:1px solid var(--card-line);max-width:820px}
+.crow{display:grid;grid-template-columns:110px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--card-line);align-items:baseline}
+.crow .tm{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em}
+.crow .ev{font-size:15px;line-height:1.6;max-width:62ch}
+.inc{display:grid;grid-template-columns:1fr 1fr;gap:12px 34px;max-width:820px}
+@media(max-width:680px){.inc{grid-template-columns:1fr}}
+.inc div{position:relative;padding-left:26px;font-size:14.5px;line-height:1.6}
+.inc div:before{content:"—";position:absolute;left:0}
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid var(--card-line);background:var(--card-line)}
+@media(max-width:720px){.fit{grid-template-columns:1fr}}
+.fit-col{padding:26px 26px}
+.fit-col .k{display:block;margin-bottom:16px}
+.fit-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fit-col li{position:relative;padding-left:22px;font-size:14px;line-height:1.55}
+.fit-col li:before{position:absolute;left:0;font-family:var(--mono)}
+.fit-col.yes li:before{content:"+"}
+.fit-col.no li:before{content:"\2192"}
+.hop{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 0 0}
+.hop a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid;padding-bottom:3px}
+.final{padding:72px 0;text-align:left}
+.final h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.4vw,52px);letter-spacing:-.02em;line-height:1.06;margin-bottom:14px}
+.final h2 em{font-style:italic;font-weight:300}
+.final p{max-width:54ch;font-size:15.5px;margin-bottom:30px}
+.final .go{display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:18px 34px;transition:.15s}
+footer{border-top:1px solid var(--card-line)}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:26px 0;font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+@media(max-width:860px){.hero .big-rn{opacity:.05}}
+
+body{background:var(--forest-2);color:#dfe8dd}
+::selection{background:var(--lime);color:var(--ink)}
+nav.top{background:var(--forest-2);--nav-rule:rgba(242,238,227,.18);--nav-hair:rgba(242,238,227,.12)}
+.brand{color:var(--paper)} .brand .sq{background:var(--lime)} .brand .sq:after{background:var(--forest-2)}
+.top-links a{color:#b9c9b6} .top-links a:hover{background:var(--forest);color:var(--paper)}
+.top-links a.cta{background:var(--lime);color:var(--ink)}
+.top-links a.cta:hover{background:var(--lime-dim)}
+.hero{--sec-rule:rgba(242,238,227,.18)} .hero .big-rn{color:var(--lime)}
+.hero h1{color:var(--paper)} .hero h1 em{color:var(--lime)}
+.hero .k{color:var(--lime)} .hero p.lede{color:#b9c9b6}
+.hero-price .amt{color:var(--lime)} .hero-price .bf{color:#8fa38c}
+.hero-ctas{--cta-border:rgba(242,238,227,.35)}
+.hero-ctas a.primary{background:var(--lime);color:var(--ink)}
+.hero-ctas a.primary:hover{background:var(--lime-dim)}
+.hero-ctas a.ghost{border-left:1px solid rgba(242,238,227,.35);color:#b9c9b6}
+.hero-ctas a.ghost:hover{color:var(--paper)}
+.sec{--sec-rule:rgba(242,238,227,.18)} .sec .num{color:var(--lime)}
+.sec h2{color:var(--paper)} .sec .aside{color:#b9c9b6}
+.crew,.clock,.fit{--card-line:rgba(242,238,227,.14)}
+.cbot{background:var(--forest)} .cbot h3{color:var(--paper)} .cbot p{color:#b9c9b6}
+.cbot .tag{border-color:rgba(242,238,227,.25);color:#b9c9b6}
+.cbot .tag.Night{background:rgba(198,243,107,.14);color:var(--lime);border-color:rgba(198,243,107,.3)}
+.roster-note{color:#8fa38c}
+.crow .tm{color:var(--lime)} .crow .ev{color:#c7d3c3}
+.inc div{color:#b9c9b6} .inc div:before{color:var(--lime)}
+.fit-col{background:var(--forest)} .fit-col .k{color:var(--lime)} .fit-col li{color:#b9c9b6}
+.fit-col.yes li:before{color:var(--lime)} .fit-col.no li:before{color:#8fa38c}
+.hop a{color:var(--paper);border-color:var(--lime)}
+.final{background:var(--forest-2)} .final h2{color:var(--paper)} .final h2 em{color:var(--lime)}
+.final p{color:#b9c9b6}
+.final .go{background:var(--lime);color:var(--ink)} .final .go:hover{background:var(--lime-dim)}
+footer{color:#8fa38c;--card-line:rgba(242,238,227,.14)}
+.foot-in{border-top:0} footer a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="../index.html"><span class="sq"></span>Omniagent</a>
+    <div class="top-links">
+      <a href="../index.html#assemblies">All assemblies</a>
+      <a class="cta" href="../claim.html?a=VII">Claim the VII</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="big-rn" aria-hidden="true">VII</span>
+  <div class="wrap">
+    <span class="k">Assembly VII — deployed as one system, live in 48 hours</span>
+    <h1>Assembly of<br />Seven. <em>The whole floor, day and night.</em></h1>
+    <p class="lede">For the business that's already slammed. Four agents hold the front — answers, support, bookings, sales — while three night-shift automations audit the day, chase silent money, and grow the rating on a clock.</p>
+    <div class="hero-price">
+      <span class="amt">$899<small> /mo</small></span>
+      <span class="bf">+ $1,800 assembly, once · cancel any month, 30 days' notice</span>
+    </div>
+    <div class="hero-ctas">
+      <a class="primary" href="../claim.html?a=VII">Claim this assembly</a>
+      <a class="ghost" href="../index.html#try">Try it live first</a>
+    </div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">01 / The crew</span>
+    <h2>7 seats. <em>Every one filled.</em></h2>
+    <div class="crew">
+      <div class="cbot"><span class="tag Day">Day shift</span><h3>Concierge</h3><p>The always-on first responder. Answers from your documents only, cites the source like a footnote, and hands off to a human the moment it doesn't know — it does not improvise.</p></div>
+      <div class="cbot"><span class="tag Day">Day shift</span><h3>Support Agent</h3><p>Front-line support. Reads the photo of the cracked mug, checks it against your actual returns policy, resolves it or opens a ticket with everything attached.</p></div>
+      <div class="cbot"><span class="tag Day">Day shift</span><h3>Reservations Agent</h3><p>Checks real availability before promising anything, then books, moves or cancels — only after your customer types CONFIRM. No double-bookings, no phone tag.</p></div>
+      <div class="cbot"><span class="tag Day">Day shift</span><h3>Sales Qualifier</h3><p>Greets every lead in seconds, qualifies in conversation — not a form — scores them hot, warm or cold into your CRM, and books the meeting.</p></div>
+      <div class="cbot"><span class="tag Night">Night shift</span><h3>Night Auditor</h3><p>At 02:00 it reconciles the whole day — bookings vs. no-shows, invoices vs. payments, dropped threads. At 07:00 a one-page brief lands on your WhatsApp.</p></div>
+      <div class="cbot"><span class="tag Night">Night shift</span><h3>The Chaser</h3><p>Every silent quote and invoice gets a polite follow-up, then a firmer one — day 3, 7, 14, 21. Stops the second they reply. Reports recovered revenue weekly.</p></div>
+      <div class="cbot"><span class="tag Night">Night shift</span><h3>Reputation Loop</h3><p>The day after every visit it asks one question: how was it? Happy customers get walked to your review link; unhappy ones get intercepted privately before they become a one-star.</p></div>
+    </div>
+    <p class="roster-note">The Bookkeeper (live QuickBooks) can replace any day seat at no charge — for businesses that live in their books more than their booking calendar.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">02 / On the clock</span>
+    <h2>What a day actually<br /><em>looks like.</em></h2>
+    <div class="clock">
+      <div class="crow"><span class="tm">02:00</span><span class="ev">The Night Auditor reconciles everything — bookings vs. no-shows, invoices vs. payments, dropped threads.</span></div>
+      <div class="crow"><span class="tm">07:00</span><span class="ev">A one-page morning brief lands on your WhatsApp: what happened, what's stuck, what got fixed.</span></div>
+      <div class="crow"><span class="tm">09:00</span><span class="ev">The Chaser nudges every quote and invoice that went quiet — politely on day 3, firmer by day 14.</span></div>
+      <div class="crow"><span class="tm">11:30</span><span class="ev">A customer sends a photo of a damaged item. Support checks your policy and resolves or escalates — everything attached.</span></div>
+      <div class="crow"><span class="tm">14:00</span><span class="ev">A lead asks about pricing. The Sales Qualifier answers from your docs, scores them HOT, books the demo.</span></div>
+      <div class="crow"><span class="tm">23:41</span><span class="ev">A booking request after close. Held on CONFIRM. Nobody was awake, and it didn't matter.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">03 / Every month includes</span>
+    <h2>One bill. <em>Everything in it.</em></h2>
+    <div class="inc">
+      <div>Fully hosted — the number, the AI, the infrastructure. Nothing for you to run.</div>
+      <div>Up to 8,000 conversations a month — and a conversation with you before anything changes if you outgrow it.</div>
+      <div>Every answer grounded in your documents, source cited. Unknowns escalate, never improvise.</div>
+      <div>Anything irreversible waits for a typed CONFIRM. Money never moves on a guess.</div>
+      <div>Knowledge refreshes — send new menus, prices, policies any time.</div>
+      <div>Cancel with 30 days' notice. Your data deleted, not archived.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="num">04 / The honest fit</span>
+    <h2>Right for you — <em>or not yet.</em></h2>
+    <div class="fit">
+      <div class="fit-col yes"><span class="k">Take the VII if</span><ul><li>More messages than your people can answer</li><li>Follow-ups already slipping through cracks</li><li>Real money sitting in “I meant to reply”</li><li>You want mornings to start with a brief, not a scramble</li></ul></div>
+      <div class="fit-col no"><span class="k">Look elsewhere if</span><ul><li>A quiet single counter — the Three is enough</li><li>You also want quotes drafted, orders tracked, no-shows nudged, lapsed customers won back — that's the Fifteen</li></ul></div>
+    </div>
+    <div class="hop">
+      <a href="three.html">&larr; Smaller: Assembly of Three — $399/mo</a>
+      <a href="fifteen.html">Bigger: Assembly of Fifteen — $1,299/mo &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Claim the VII.<br /><em>Live in 48 hours.</em></h2>
+    <p>Pick your seats on the claim page, send five fields, and your crew is answering by the day after tomorrow. Or bring your hardest customer question to a 20-minute demo first.</p>
+    <a class="go" href="../claim.html?a=VII">Claim this assembly</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 OMNIAGENT</span>
+    <span>ANSWER EVERYTHING · INVENT NOTHING</span>
+    <a href="../index.html">BACK TO OMNIAGENT.AI</a>
+  </div>
+</footer>
+
+</body>
+</html>
