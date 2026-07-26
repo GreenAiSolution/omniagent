@@ -260,6 +260,22 @@ input[type=range]::-moz-range-thumb{width:17px;height:17px;background:var(--lime
 .comp-tbl tr.self td:last-child{color:var(--forest);font-weight:600}
 .comp-src{font-size:11.5px;color:var(--ink-soft);margin-top:12px;font-family:var(--mono)}
 
+/* ---------- quick-access button band ---------- */
+.qa{background:var(--paper);border-bottom:1px solid var(--rule)}
+.qa-in{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding-top:22px;padding-bottom:22px}
+.qa a{display:flex;flex-direction:column;gap:3px;justify-content:center;border:1px solid var(--rule);padding:14px 16px;min-width:0;transition:.15s;background:var(--paper)}
+.qa a .t{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qa a .s{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qa a:hover{background:var(--ink);color:var(--paper)}
+.qa a:hover .s{color:#b6b0a4}
+.qa a.claim{background:var(--ink);color:var(--paper)}
+.qa a.claim .s{color:#b6b0a4}
+.qa a.claim:hover{background:var(--forest);color:var(--lime)}
+.qa a.sys{background:#0b0a08;color:var(--gold);border-color:#0b0a08}
+.qa a.sys .s{color:#8a8478}
+.qa a.sys:hover{background:#171410}
+@media(max-width:960px){.qa-in{grid-template-columns:repeat(2,1fr)}.qa a.sys{grid-column:1/-1}}
+
 /* ---------- assemblies ---------- */
 .asm{border-top:1px solid var(--rule)}
 .asm-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:30px;align-items:center;padding:36px 28px;border-bottom:1px solid var(--hair);transition:background .2s}
@@ -537,6 +553,7 @@ footer a:hover{color:var(--paper)}
       <a href="#night">Night shift</a>
       <a href="#controls">Trust</a>
       <a href="#price">Price list</a>
+      <a href="#assemblies">Assemblies</a>
       <a href="#builder">Build</a>
       <a href="#system">The System</a>
       <a class="cta" href="#final">Book a demo</a>
@@ -582,6 +599,16 @@ footer a:hover{color:var(--paper)}
   <div class="wrap eli5-in">
     <span class="eli5-mark">In plain English</span>
     <p>It's a smart employee that lives in your WhatsApp. It answers customers honestly using only what you've told it — in whatever language they write to you in — never spends a cent without asking first, and keeps working after everyone else has gone home.</p>
+  </div>
+</section>
+
+<section class="qa" aria-label="Quick access">
+  <div class="wrap qa-in">
+    <a href="assembly/three.html"><span class="t">Assembly III</span><span class="s">3 bots · $399/mo</span></a>
+    <a href="assembly/seven.html"><span class="t">Assembly VII</span><span class="s">7 bots · $899/mo</span></a>
+    <a href="assembly/fifteen.html"><span class="t">Assembly XV</span><span class="s">15 bots · $1,299/mo</span></a>
+    <a class="claim" href="claim.html"><span class="t">Claim yours</span><span class="s">Invoice today · live in 48h</span></a>
+    <a class="sys" href="https://greenaisolution.github.io/omniagent-system/"><span class="t">The System</span><span class="s">By application only</span></a>
   </div>
 </section>
 
